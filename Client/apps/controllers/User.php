@@ -47,4 +47,9 @@ class User extends Swoole\Controller
         $this->session->start();
         $this->user->logout();
     }
+
+    public  function logint()
+    {
+        $this->display('user/logint.php');
+    }
 }
