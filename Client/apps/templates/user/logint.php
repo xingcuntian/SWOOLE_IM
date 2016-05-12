@@ -8,13 +8,13 @@
 SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- Bootstrap Core CSS -->
-    <link href="static/css/bootstrap.css" rel='stylesheet' type='text/css' />
+    <link href="/static/css/bootstrap.css" rel='stylesheet' type='text/css' />
     <!-- Custom CSS -->
-    <link href="static/css/style.css" rel='stylesheet' type='text/css' />
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css' />
     <!-- font CSS -->
     <link rel="icon" href="favicon.ico" type="image/x-icon" >
     <!-- font-awesome icons -->
-    <link href="static/css/font-awesome.css" rel="stylesheet">
+    <link href="/static/css/font-awesome.css" rel="stylesheet">
 
 </head>
 <body class="login-bg">
