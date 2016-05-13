@@ -23,9 +23,9 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
         <h1>Login</h1>
     </div>
     <div class="login-info">
-        <form action="controllers/login.php" method="post">
-            <input type="text" class="user" name="user" placeholder="Email" required="">
-            <input type="password" name="password" class="lock" placeholder="Password">
+        <form action="/user/login" method="post">
+            <input type="text" class="user"  name="username"  required="">
+            <input type="password"name="password" class="lock" placeholder="Password">
             <div class="forgot-top-grids">
                 <div class="forgot-grid">
                     <ul>
