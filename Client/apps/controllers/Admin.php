@@ -7,7 +7,7 @@ class Admin extends Swoole\Controller
     function index()
     {
         $this->session->start();
-        var_dump($_SESSION);
+       // var_dump($_SESSION);
         Swoole\Auth::loginRequire();
         $this->display('admin/index.php');
     }

@@ -13,7 +13,7 @@ class User extends Swoole\Controller
         //已经登录了，跳转到
         if ($this->user->isLogin())
         {
-            $this->http->redirect('/user/home/');
+            $this->http->redirect('/admin/index/');
             return;
         }
         if (!empty($_POST['password']))
@@ -21,7 +21,7 @@ class User extends Swoole\Controller
             $r = $this->user->login(trim($_POST['username']), $_POST['password']);
             if ($r)
             {
-                $this->http->redirect('/user/home/');
+                $this->http->redirect('/admin/index/');
                 return;
             }
             else
@@ -46,10 +46,5 @@ class User extends Swoole\Controller
     {
         $this->session->start();
         $this->user->logout();
-    }
-
-    public  function logint()
-    {
-        $this->display('user/logint.php');
     }
 }
