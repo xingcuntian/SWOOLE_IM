@@ -18,31 +18,4 @@ $config['swoole'] = array(
     'daemonize'       => 0,
 );
 
-$config['user'] = array(
-    'data_dir' => __DIR__ . '/data/',
-    'log_file' => __DIR__ . '/log/user.log',
-);
-
-$config['redis'] = array(
-    'host'    => "192.168.68.1",
-    'port'    => 6379,
-    'password' => '',
-    'timeout' => 0.25,
-    'pconnect' => false,
-//    'database' => 1,
-);
-$config['dbmaster'] = array(
-    'type'       => Swoole\Database::TYPE_MYSQL,
-    'host'       => "192.168.68.1",
-    'port'       => 3306,
-    'dbms'       => 'mysql',
-    'engine'     => 'MyISAM',
-    'user'       => "root",
-    'passwd'     => "",
-    'name'       => "test",
-    'charset'    => "utf8",
-    'setname'    => true,
-    'persistent' => false, //MySQL长连接
-);
-
 return $config;

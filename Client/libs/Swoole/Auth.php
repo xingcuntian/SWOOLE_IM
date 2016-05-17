@@ -27,6 +27,7 @@ class Auth
     static $lastlogin = 'lastlogin';
     static $lastip = 'lastip';
     static $session_prefix = '';
+    static $token = 'SWOOLE_IM';
     static $mk_password = 'username,password';
     static $password_hash = 'sha1';
 
@@ -134,6 +135,7 @@ class Auth
             {
                 $_SESSION[self::$session_prefix . 'isLogin'] = true;
                 $_SESSION[self::$session_prefix . 'user_id'] = $this->user['id'];
+                $_SESSION[self::$session_prefix . 'token']   = md5($this->user['id'].self::$token);
                 if ($auto_login)
                 {
                     $this->autoLogin();

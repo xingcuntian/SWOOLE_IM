@@ -6,6 +6,15 @@
 <script type="text/javascript" src="/static/js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="/static/js/dandan.js"></script>
 <script type="text/javascript">
+    var user_id = <?php echo isset($_SESSION['user_id'])?$_SESSION['user_id']:''; ?>;
+    var token = <?php echo isset($_SESSION['token'])?$_SESSION['token']:''; ?>;
+</script>
+<script type="text/javascript" src="/static/js/config.js"></script>
+<script type="text/javascript" src="/static/js/chat.js"></script>
+
+
+
+<script type="text/javascript">
 //登陆的人
 $admin_name=prompt("请输入你的名字","中国看笑话网");
 if($admin_name!=null){
@@ -32,6 +41,7 @@ Array('王五'))
 </style>
 </head>
 <body>
+
 <div id="mid_top">
 <!--  <div class="list">
     <table border="0" cellspacing="0" cellpadding="0">

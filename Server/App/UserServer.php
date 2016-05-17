@@ -1,17 +1,12 @@
 <?php
 namespace SW;
 
-use SW\Store\File;
 use Swoole;
 use Swoole\Filter;
 
 
 class UserServer extends Swoole\Protocol\WebSocket
 {
-    protected static $clconfig;
-    protected static $_redisClient;
-    protected static $_mysqlClient;
-    protected static $_sessionClient;
     protected static $token = '123456';
 
     function __construct($config = array())
@@ -22,7 +17,7 @@ var webim = {
     'server' : '{$config['server']['url']}'
 }
 HTML;
-        file_put_contents(WEBPATH . '/admin/js/config.js', $config_js);
+        file_put_contents(WEBPATH . '../Client/static/js/config.js', $config_js);
 
         //检测日志目录是否存在
         if (isset($config['user']['log_file']) && !empty($config['user']['log_file'])) {
@@ -37,16 +32,9 @@ HTML;
             $this->setLogger($logger);   //Logger
          }
 
-       // $this->setStore(new \SW\Store\File($config['user']['data_dir']));
+        $this->setStore(new \SW\Store\File($config['user']['data_dir']));
         $this->origin = $config['server']['origin'];
         parent::__construct($config);
-
-        if( self::getSession() !== NULL)
-        {
-          //  self::getSession()->initSess();
-        }
-
-        self::$clconfig = $config;
     }
 
 
