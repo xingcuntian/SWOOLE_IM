@@ -3,11 +3,16 @@ namespace SW;
 
 use Swoole;
 use Swoole\Filter;
+use SW\Store;
 
 
 class UserServer extends Swoole\Protocol\WebSocket
 {
-    protected static $token = '123456';
+    protected  $store;
+    protected  $redis;
+    const  TOKEN = 'SWOOLE_IM';
+    const  ONLINE_CONNECTION = 'hash_online_connect';
+
 
     function __construct($config = array())
     {
@@ -23,21 +28,17 @@ HTML;
         if (isset($config['user']['log_file']) && !empty($config['user']['log_file'])) {
             $log_dir = dirname($config['user']['log_file']);
         }
-        if (isset($log_dir) && !is_dir($log_dir)) {
-            mkdir($log_dir, 0777, true);
-        }
         if (isset($log_dir))
         {
+            !is_dir($log_dir)? mkdir($log_dir, 0777, true):'';
             $logger = new Swoole\Log\FileLog($config['user']['log_file']);
             $this->setLogger($logger);   //Logger
-         }
-
-        $this->setStore(new \SW\Store\File($config['user']['data_dir']));
+        }
+        $this->store = (new \SW\Store\File($config['user']['data_dir']));
+        $this->redis = (new  \SW\Store\Redis($config['redis']['host'],$config['redis']['port'],$config['redis']['timeout'] ));
         $this->origin = $config['server']['origin'];
         parent::__construct($config);
-    }
-
-
+     }
 
     /**
      * 登录
@@ -46,70 +47,56 @@ HTML;
      */
     function cmd_login($client_id, $msg)
     {
-        $info['name'] = Filter::escape($msg['name']);
-        $info['passwd'] = Filter::escape($msg['passwd']);
+        $info['user_id'] = Filter::escape($msg['user_id']);
+        $info['token'] = Filter::escape($msg['token']);
+
         file_put_contents('/zhang/aa.log',var_export($msg,true),FILE_APPEND);
 
-        //用户名或密码为空、提示重新输入
-        if(empty($info['name']) || empty($info['passwd']))
-        {
-            $resMsg = array(
-                'cmd' => 'input',
-                'fd' => $client_id,
-                'data' => '请输入用户名与密码'
-            );
+        $resMsg = array(
+            'cmd' => 'login',
+            'fd' => $client_id,
+            'data' => '请登录'
+        );
+        if(empty($info['user_id']) || empty($info['token'])) {
+            $resMsg['data'] = '请登录';
             $this->sendJson($client_id, $resMsg);
             exit;
-
         }
-        //查询用户信息
-       // $userData =  self::getUserData($info['name'],$info['passwd']);
-        $userData = '111';
-        if(empty($userData)){
-            $resMsg = array(
-                'cmd' => 'input',
-                'fd' => $client_id,
-                'data' => '用户信息错误，没有此用户'
-            );
-            $this->sendJson($client_id, $resMsg);
-           // $this->close($client_id);
-            exit;
-        }
-//        session_start();
-//        $_SESSION['uname'] = $info['name'];
-//        $_SESSION['user_id'] = $info['user_id'];
-//        $_SESSION['utoken'] = md5($info['name'].self::$token);
+       if(strcmp($info['token'], md5($info['user_id'].self::TOKEN) ) != 0){
+             $resMsg['data'] = '用户信息不正确,请重新登录';
+             $this->sendJson($client_id, $resMsg);
+             exit;
+       }
 
-        $redis = self::getRedisInstance();
 
-        if($redis== NULL)
-        {
-            $resMsg = array(
-                'cmd' => 'error',
-                'fd' => $client_id,
-                'data' => 'redis  connent error'
-            );
-            $this->sendJson($client_id, $resMsg);
-           exit;
+//        $redis = self::getRedisInstance();
+//        if($redis== NULL)
+//        {
+//            $resMsg = array(
+//                'cmd' => 'error',
+//                'fd' => $client_id,
+//                'data' => 'redis  connent error'
+//            );
+//            $this->sendJson($client_id, $resMsg);
+//           exit;
+//        }
 
-        }
 
-            $key = md5($info['name']);
-            $clientinfo =  $redis->get($key);
-          if(isset($clientinfo) && !empty($clientinfo)){
+
+         $login_client_id  = $this->redis->hget(self::ONLINE_CONNECTION, $info['user_id']);
+          if(!empty($login_client_id)){
             //表示已经有人登录了 回复给登录用户
             $resMsg = array(
                 'cmd' => 'login',
-                'fd' => $clientinfo,
+                'fd' => $login_client_id,
                 'data' => '你的帐号在别的地方登录'
             );
             //将下线消息发送给之前的登录人
-            $this->sendJson($clientinfo, $resMsg);
-            //$this->close($clientinfo);
-
+            $this->sendJson($login_client_id, $resMsg);
           }
 
-        $redis -> set($key,$client_id);
+        $this->redis->hset(self::ONLINE_CONNECTION, $info['user_id'],$client_id);
+
         $resMsg = array(
             'cmd' => 'success',
             'fd' => $client_id,
@@ -172,6 +159,14 @@ HTML;
         }
     }
 
+
+
+
+
+
+
+
+    ///---------------------------------------------
 
     /*  getRedisInstance
      *  实例化 redis

@@ -18,4 +18,14 @@ $config['swoole'] = array(
     'daemonize'       => 0,
 );
 
+$config['redis'] = array(
+    'host'    => "192.168.68.1",
+    'port'    => 6379,
+    'password' => '',
+    'timeout' => 0.25,
+    'pconnect' => false,
+//    'database' => 1,
+);
+
+
 return $config;
