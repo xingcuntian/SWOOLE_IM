@@ -44,6 +44,7 @@ function listenEvent() {
         msg.cmd = 'login';
         msg.user_id = user_id;
         msg.token = token;
+        msg.user_name = user_name;
         ws.send($.toJSON(msg));
     };
 
@@ -51,13 +52,17 @@ function listenEvent() {
     ws.onmessage = function (e) {
         var message = $.evalJSON(e.data);
         var cmd = message.cmd;
+
+        alert('cmd:'+cmd);
+        alert('data:'+data);
+        alert('fd:'+fd);
         if (cmd == 'login')
         {
             client_id = $.evalJSON(e.data).fd;
             //获取在线列表
-            ws.send($.toJSON({cmd : 'getOnline'}));
+            //ws.send($.toJSON({cmd : 'getOnline'}));
             //获取历史记录
-            ws.send($.toJSON({cmd : 'getHistory'}));
+           // ws.send($.toJSON({cmd : 'getHistory'}));
             //alert( "收到消息了:"+e.data );
         }
         //else if (cmd == 'getOnline')

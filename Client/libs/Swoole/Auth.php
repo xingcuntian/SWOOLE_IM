@@ -136,6 +136,7 @@ class Auth
                 $_SESSION[self::$session_prefix . 'isLogin'] = true;
                 $_SESSION[self::$session_prefix . 'user_id'] = $this->user['id'];
                 $_SESSION[self::$session_prefix . 'token']   = md5($this->user['id'].self::$token);
+                $_SESSION[self::$session_prefix . 'user_name'] = $username;
                 if ($auto_login)
                 {
                     $this->autoLogin();

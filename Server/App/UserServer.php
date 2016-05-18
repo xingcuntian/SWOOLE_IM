@@ -10,6 +10,7 @@ class UserServer extends Swoole\Protocol\WebSocket
 {
     protected  $store;
     protected  $redis;
+    protected  $users;
     const  TOKEN = 'SWOOLE_IM';
     const  ONLINE_CONNECTION = 'hash_online_connect';
 
@@ -34,7 +35,7 @@ HTML;
             $logger = new Swoole\Log\FileLog($config['user']['log_file']);
             $this->setLogger($logger);   //Logger
         }
-        $this->store = (new \SW\Store\File($config['user']['data_dir']));
+        $this->store = (new \SW\Store\File($config['user']['data_dir'],$config['user']['online_dir']));
         $this->redis = (new  \SW\Store\Redis($config['redis']['host'],$config['redis']['port'],$config['redis']['timeout'] ));
         $this->origin = $config['server']['origin'];
         parent::__construct($config);
@@ -48,7 +49,8 @@ HTML;
     function cmd_login($client_id, $msg)
     {
         $info['user_id'] = Filter::escape($msg['user_id']);
-        $info['token'] = Filter::escape($msg['token']);
+        $info['token']   = Filter::escape($msg['token']);
+        $info['user_name'] = Filter::escape($msg['user_name']);
 
         file_put_contents('/zhang/aa.log',var_export($msg,true),FILE_APPEND);
 
@@ -67,43 +69,43 @@ HTML;
              $this->sendJson($client_id, $resMsg);
              exit;
        }
-
-
-//        $redis = self::getRedisInstance();
-//        if($redis== NULL)
-//        {
-//            $resMsg = array(
-//                'cmd' => 'error',
-//                'fd' => $client_id,
-//                'data' => 'redis  connent error'
-//            );
-//            $this->sendJson($client_id, $resMsg);
-//           exit;
-//        }
-
-
-
          $login_client_id  = $this->redis->hget(self::ONLINE_CONNECTION, $info['user_id']);
           if(!empty($login_client_id)){
-            //表示已经有人登录了 回复给登录用户
-            $resMsg = array(
-                'cmd' => 'login',
-                'fd' => $login_client_id,
-                'data' => '你的帐号在别的地方登录'
-            );
-            //将下线消息发送给之前的登录人
-            $this->sendJson($login_client_id, $resMsg);
+              //表示已经有人登录了 回复给登录用户
+              $resMsg['fd']   = $login_client_id;
+              $resMsg['data'] = '你的帐号在别的地方登录';
+             //将下线消息发送给之前的登录人
+             $this->sendJson($login_client_id, $resMsg);
           }
-
         $this->redis->hset(self::ONLINE_CONNECTION, $info['user_id'],$client_id);
-
         $resMsg = array(
-            'cmd' => 'success',
-            'fd' => $client_id,
-            'data' => '登录成功'
+            'cmd' => 'login_success',
+            'fd'  => $client_id,
+            'data'=> '登录成功'
         );
         $this->sendJson($client_id, $resMsg);
+
+        //把会话存起来
+        $resMsg['user_name'] =   $info['user_name'];
+        $resMsg['user_id']   =   $info['user_id'];
+        unset($resMsg['data']);
+        $this->users[$client_id] = $resMsg;
+        $this->store->login($client_id, $resMsg);
+
+        //广播给其它在线用户
+        $resMsg['cmd'] = 'newUser';
+        //将上线消息发送给所有人
+        $this->broadcastJson($client_id, $resMsg);
+        //用户登录消息
+        $loginMsg = array(
+            'cmd' => 'fromMsg',
+            'from' => 0,
+            'channal' => 0,
+            'data' =>  $resMsg['user_name'] . "上线了",
+        );
+        $this->broadcastJson($client_id, $loginMsg);
     }
+
 
 
 
@@ -160,6 +162,27 @@ HTML;
     }
 
 
+    /**
+     * 广播JSON数据
+     * @param $client_id
+     * @param $array
+     */
+    function broadcastJson($sesion_id, $array)
+    {
+        $msg = json_encode($array);
+        $this->broadcast($sesion_id, $msg);
+    }
+
+    function broadcast($current_session_id, $msg)
+    {
+        foreach ($this->users as $client_id => $name)
+        {
+            if ($current_session_id != $client_id)
+            {
+                $this->send($client_id, $msg);
+            }
+        }
+    }
 
 
 

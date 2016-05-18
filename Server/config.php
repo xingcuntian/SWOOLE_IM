@@ -19,12 +19,19 @@ $config['swoole'] = array(
 );
 
 $config['redis'] = array(
-    'host'    => "192.168.68.1",
+    'host'    => "192.168.68.137",
     'port'    => 6379,
     'password' => '',
     'timeout' => 0.25,
     'pconnect' => false,
 //    'database' => 1,
+);
+
+$config['user'] = array(
+    //聊天记录存储的目录
+    'data_dir' => __DIR__ . '/data/',
+    'online_dir'=> __DIR__ . '/data/online_dir/',
+    'log_file' => __DIR__ . '/log/webim.log',
 );
 
 

@@ -8,6 +8,7 @@
 <script type="text/javascript">
     var user_id = <?php echo isset($_SESSION['user_id'])?$_SESSION['user_id']:''; ?>;
     var token = <?php echo isset($_SESSION['token'])?$_SESSION['token']:''; ?>;
+    var user_name = <?php echo isset($_SESSION['user_name'])?$_SESSION['user_name']:''; ?>;
 </script>
 <script type="text/javascript" src="/static/js/config.js"></script>
 <script type="text/javascript" src="/static/js/chat.js"></script>
