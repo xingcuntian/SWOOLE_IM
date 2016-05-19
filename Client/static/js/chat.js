@@ -61,6 +61,7 @@ function listenEvent() {
           alert(message.data);
           $.get('/user/logout');
           ws.close();
+          location.href = '/user/login';
           client_id = $.evalJSON(e.data).fd;
             //获取在线列表
             //ws.send($.toJSON({cmd : 'getOnline'}));
