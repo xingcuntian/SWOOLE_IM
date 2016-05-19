@@ -6,9 +6,9 @@
 <script type="text/javascript" src="/static/js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="/static/js/dandan.js"></script>
 <script type="text/javascript">
-    var user_id = <?php echo isset($_SESSION['user_id'])?$_SESSION['user_id']:''; ?>;
-    var token = <?php echo isset($_SESSION['token'])?$_SESSION['token']:''; ?>;
-    var user_name = <?php echo isset($_SESSION['user_name'])?$_SESSION['user_name']:''; ?>;
+    var user_id = "<?php echo isset($_SESSION['user_id'])?$_SESSION['user_id']:''; ?>";
+    var token = "<?php echo isset($_SESSION['token'])?$_SESSION['token']:''; ?>";
+    var user_name = "<?php echo isset($_SESSION['user_name'])?$_SESSION['user_name']:''; ?>";
 </script>
 <script src="/static/js/jquery.json.js"></script>
 <script type="text/javascript" src="/static/js/config.js"></script>

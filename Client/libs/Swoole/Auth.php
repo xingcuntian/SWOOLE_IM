@@ -35,7 +35,7 @@ class Auth
     static $password_salt_size = 22;
 
     static $cookie_life = 2592000;
-    static $session_destroy = false;
+    static $session_destroy = true;
 
     protected $config;
     protected $login_table = '';

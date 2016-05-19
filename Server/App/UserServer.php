@@ -36,7 +36,7 @@ HTML;
             $this->setLogger($logger);   //Logger
         }
         $this->store = (new \SW\Store\File($config['user']['data_dir'],$config['user']['online_dir']));
-        $this->redis = (new  \SW\Store\Redis($config['redis']['host'],$config['redis']['port'],$config['redis']['timeout'] ));
+        $this->redis =  new Swoole\Redis($config['redis']);
         $this->origin = $config['server']['origin'];
         parent::__construct($config);
      }
@@ -52,7 +52,14 @@ HTML;
         $info['token']   = Filter::escape($msg['token']);
         $info['user_name'] = Filter::escape($msg['user_name']);
 
-        file_put_contents('/zhang/aa.log',var_export($msg,true),FILE_APPEND);
+        file_put_contents('msg.log',var_export($msg,true),FILE_APPEND);
+        $tmp = array(
+           'itoken'=> $info['token'],
+           'mtoken'=>  md5($info['user_id'].self::TOKEN)
+          );
+        $tmp = array_merge($tmp,$info);
+         file_put_contents('/zhang/sw_aa.log',var_export($tmp,true),FILE_APPEND);
+
 
         $resMsg = array(
             'cmd' => 'login',
@@ -152,8 +159,6 @@ HTML;
      */
     function sendJson($client_id, $array)
     {
-        file_put_contents('aa.log',var_export($array,true),FILE_APPEND);
-
         $msg = json_encode($array);
         if ($this->send($client_id, $msg) === false)
         {
