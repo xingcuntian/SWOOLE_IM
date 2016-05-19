@@ -54,8 +54,8 @@ function listenEvent() {
         var cmd = message.cmd;
 
         alert('cmd:'+cmd);
-        alert('data:'+data);
-        alert('fd:'+fd);
+        alert('data:'+message.data);
+        alert('fd:'+message.fd);
         if (cmd == 'login')
         {
             client_id = $.evalJSON(e.data).fd;

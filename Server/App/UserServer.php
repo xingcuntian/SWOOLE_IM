@@ -23,7 +23,7 @@ var webim = {
     'server' : '{$config['server']['url']}'
 }
 HTML;
-        file_put_contents(WEBPATH . '../Client/static/js/config.js', $config_js);
+        file_put_contents(WEBPATH . '/Client/static/js/config.js', $config_js);
 
         //检测日志目录是否存在
         if (isset($config['user']['log_file']) && !empty($config['user']['log_file'])) {
