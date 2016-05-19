@@ -1,7 +1,7 @@
 <?php
 define('DEBUG', 'on');
 define('WEBPATH', dirname(__DIR__));
-require __DIR__.'/vendor/autoload.php';
+require WEBPATH.'/vendor/autoload.php';
 
 Swoole\Loader::vendor_init();
 
