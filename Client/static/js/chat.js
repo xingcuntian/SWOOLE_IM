@@ -58,7 +58,10 @@ function listenEvent() {
         alert('fd:'+message.fd);
         if (cmd == 'login')
         {
-            client_id = $.evalJSON(e.data).fd;
+          alert(message.data);
+          $.get('/user/logout');
+          ws.close();
+          client_id = $.evalJSON(e.data).fd;
             //获取在线列表
             //ws.send($.toJSON({cmd : 'getOnline'}));
             //获取历史记录
@@ -95,7 +98,7 @@ function listenEvent() {
     ws.onclose = function (e) {
         if (confirm("聊天服务器已关闭")) {
             //alert('您已退出聊天室');
-            location.href = 'index.html';
+            location.href = '/user/login';
         }
     };
 
