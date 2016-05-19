@@ -18,7 +18,8 @@
 
 <script type="text/javascript">
 //登陆的人
-$admin_name=prompt("请输入你的名字","中国看笑话网");
+//$admin_name=prompt("请输入你的名字","中国看笑话网");
+$admin_name = 'aaa';
 if($admin_name!=null){
   if(!$admin_name.replace(/^\s\s*/, '').replace(/\s\s*$/, '')){
     $admin_name="游客";
