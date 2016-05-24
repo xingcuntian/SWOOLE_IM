@@ -51,21 +51,17 @@ HTML;
         $info['user_id'] = Filter::escape($msg['user_id']);
         $info['token']   = Filter::escape($msg['token']);
         $info['user_name'] = Filter::escape($msg['user_name']);
-
-        file_put_contents('msg.log',var_export($msg,true),FILE_APPEND);
         $tmp = array(
-           'itoken'=> $info['token'],
-           'mtoken'=>  md5($info['user_id'].self::TOKEN)
+           'client_id'=> $client_id,
+           'msg' => $msg
           );
-        $tmp = array_merge($tmp,$info);
-         file_put_contents('/zhang/sw_aa.log',var_export($tmp,true),FILE_APPEND);
-
-
-        $resMsg = array(
+         $tmp = array_merge($tmp,$info);
+         file_put_contents('sw.log',var_export($tmp,true),FILE_APPEND);
+         $resMsg = array(
             'cmd' => 'login',
             'fd' => $client_id,
             'data' => '请登录'
-        );
+         );
         if(empty($info['user_id']) || empty($info['token'])) {
             $resMsg['data'] = '请登录';
             $this->sendJson($client_id, $resMsg);
@@ -83,6 +79,7 @@ HTML;
               $resMsg['data'] = '你的帐号在别的地方登录';
              //将下线消息发送给之前的登录人
              $this->sendJson($login_client_id, $resMsg);
+              exit;
           }
         $this->redis->hset(self::ONLINE_CONNECTION, $info['user_id'],$client_id);
         $resMsg = array(
