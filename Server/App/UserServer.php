@@ -51,12 +51,14 @@ HTML;
         $info['user_id'] = Filter::escape($msg['user_id']);
         $info['token']   = Filter::escape($msg['token']);
         $info['user_name'] = Filter::escape($msg['user_name']);
+
         $tmp = array(
            'client_id'=> $client_id,
            'msg' => $msg
           );
          $tmp = array_merge($tmp,$info);
          file_put_contents('sw.log',var_export($tmp,true),FILE_APPEND);
+
          $resMsg = array(
             'cmd' => 'login',
             'fd' => $client_id,
@@ -67,21 +69,23 @@ HTML;
             $this->sendJson($client_id, $resMsg);
             exit;
         }
+
+        $userKey = 'cmd_'.$info['user_id'];
+
        if(strcmp($info['token'], md5($info['user_id'].self::TOKEN) ) != 0){
              $resMsg['data'] = '用户信息不正确,请重新登录';
              $this->sendJson($client_id, $resMsg);
              exit;
        }
-         $login_client_id  = $this->redis->hget(self::ONLINE_CONNECTION, $info['user_id']);
+         $login_client_id  = $this->redis->hget(self::ONLINE_CONNECTION, $userKey);
           if(!empty($login_client_id)){
               //表示已经有人登录了 回复给登录用户
               $resMsg['fd']   = $login_client_id;
               $resMsg['data'] = '你的帐号在别的地方登录';
              //将下线消息发送给之前的登录人
              $this->sendJson($login_client_id, $resMsg);
-              exit;
           }
-        $this->redis->hset(self::ONLINE_CONNECTION, $info['user_id'],$client_id);
+        $this->redis->hset(self::ONLINE_CONNECTION, $userKey,$client_id);
         $resMsg = array(
             'cmd' => 'login_success',
             'fd'  => $client_id,
@@ -90,7 +94,7 @@ HTML;
         $this->sendJson($client_id, $resMsg);
 
         //把会话存起来
-        $resMsg['user_name'] =   $info['user_name'];
+       /* $resMsg['user_name'] =   $info['user_name'];
         $resMsg['user_id']   =   $info['user_id'];
         unset($resMsg['data']);
         $this->users[$client_id] = $resMsg;
@@ -108,7 +112,8 @@ HTML;
             'data' =>  $resMsg['user_name'] . "上线了",
         );
         $this->broadcastJson($client_id, $loginMsg);
-    }
+    */
+       }
 
 
 
