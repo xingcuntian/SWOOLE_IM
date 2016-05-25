@@ -59,7 +59,12 @@ function listenEvent() {
         if (cmd == 'login')
         {
           alert(message.data);
-          $.get('http://sw.im.cc/user/logout');
+         // $.get('http://sw.im.cc/user/logout');
+
+            $.get('http://sw.im.cc/user/logout', {}, function(data, status) {
+                alert('>>>>>'+status);
+            });
+
           ws.close();
           location.href = '/user/login';
           client_id = $.evalJSON(e.data).fd;
