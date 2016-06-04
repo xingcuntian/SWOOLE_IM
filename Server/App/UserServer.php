@@ -124,21 +124,15 @@ HTML;
         $list =  array();
         $userList =  $this->users;
         foreach($userList as $index => $val){
-            if($client_id == $val['fd']){
-                continue;
-            }
             $list[$index] = array($val['user_name'],$val['user_id'],$val['fd']);
         }
-
-
-        $msg = array_merge($resMsg,$msg,array('us'=>$this->users));
-        file_put_contents('/zhang/IMlog/sw.log',var_export($msg,true),FILE_APPEND);
-
 //        $users = $this->store->getOnlineUsers();
 //        $info = $this->store->getUsers(array_slice($users, 0, 100));
 //        $resMsg['users'] = $users;
 //        $resMsg['list'] = $info;
+        
         $resMsg['list'] = $list;
+        file_put_contents('/zhang/IMlog/sw.log',var_export($resMsg,true),FILE_APPEND);
         $this->sendJson($client_id, $resMsg);
     }
 
