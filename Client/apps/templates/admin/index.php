@@ -17,7 +17,8 @@
 $admin_name = user_name;
     //成员数组
     $arr_user= new Array(
-    Array(user_name,'user_img/001.jpg'),
+        Array(user_name,'user_img/001.jpg')
+    )
 //    Array('今心','user_img/002.jpg'),
 //    Array('老猪','user_img/003.jpg'),
 //    Array('涛涛','user_img/004.jpg'),
