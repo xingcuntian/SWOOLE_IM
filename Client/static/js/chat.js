@@ -197,6 +197,8 @@ function actionlogin(message)
  * @param dataObj
  */
 function showOnlineList(dataObj) {
+    //加载用户
+    $(".ul").html("");//
     for(i=0;i<dataObj.length;i++){
          dandan.newuser('.ul_2',dataObj[i],i);//创建用户
     }

@@ -129,12 +129,8 @@ HTML;
             }
             $list[] = array($val['user_name'],$val['user_id'],$val['fd']);
         }
-//        $users = $this->store->getOnlineUsers();
-//        $info = $this->store->getUsers(array_slice($users, 0, 100));
-//        $resMsg['users'] = $users;
-//        $resMsg['list'] = $info;
-
         $resMsg['list'] = $list;
+        $resMsg['userList'] = $userList;
         file_put_contents('/zhang/IMlog/sw.log',var_export($resMsg,true),FILE_APPEND);
         $this->sendJson($client_id, $resMsg);
     }
@@ -189,7 +185,6 @@ HTML;
     function sendJson($client_id, $array)
     {
         $tmp = array('return'=>array('client_id'=>$client_id,'msg'=>$array));
-        file_put_contents('sw.log',var_export($tmp,true),FILE_APPEND);
 
         $msg = json_encode($array);
         if ($this->send($client_id, $msg) === false)
