@@ -53,31 +53,52 @@ function listenEvent() {
         var message = $.evalJSON(e.data);
         var cmd = message.cmd;
         var rand = Math.random();
-        if (cmd == 'login')
+
+        switch(cmd)
         {
-          alert(message.data);
-            $.ajax({
-                'url': '/user/logout?t='+rand,
-                "cache": false,
-                "method": "POST",
-                 async:false,
-                //"dataType": "json",
-                "dataType": "jsonp",
-                jsonp:'callback',
-                jsonpCallback:"success_jsonpCallback",
-                'success': function (data) {
-                    alert(data);
-                }
-            });
-          ws.close();
-          location.href = '/user/login?t='+rand;
-          client_id = $.evalJSON(e.data).fd;
+            case 'login_success':
+                alert(message.data);
+                break;
+            case 'login':
+                actionlogin();
+                break;
+
+        }
+
+
+
+        //if (cmd == 'login_success')
+        //{
+        //    alert(message.data);
+        //}
+        //if (cmd == 'login')
+        //{
+        //  alert(message.data);
+        //    $.ajax({
+        //        'url': '/user/logout?t='+rand,
+        //        "cache": false,
+        //        "method": "POST",
+        //         async:false,
+        //        //"dataType": "json",
+        //        "dataType": "jsonp",
+        //        jsonp:'callback',
+        //        jsonpCallback:"success_jsonpCallback",
+        //        'success': function (data) {
+        //            alert(data);
+        //        }
+        //    });
+        //  ws.close();
+        //  location.href = '/user/login?t='+rand;
+        //  client_id = $.evalJSON(e.data).fd;
             //获取在线列表
             //ws.send($.toJSON({cmd : 'getOnline'}));
             //获取历史记录
            // ws.send($.toJSON({cmd : 'getHistory'}));
             //alert( "收到消息了:"+e.data );
-        }
+      //  }
+
+
+
         //else if (cmd == 'getOnline')
         //{
         //    showOnlineList(message);
@@ -135,6 +156,34 @@ document.onkeydown = function (e) {
 function selectUser(userid) {
     $('#userlist').val(userid);
 }
+
+/*
+* 重复登录，退出当前帐号 跳转到登录页
+* */
+function actionlogin()
+{
+    alert(message.data);
+    $.ajax({
+        'url': '/user/logout?t='+rand,
+        "cache": false,
+        "method": "POST",
+        async:false,
+        //"dataType": "json",
+        "dataType": "jsonp",
+        jsonp:'callback',
+        jsonpCallback:"success_jsonpCallback",
+        'success': function (data) {
+            alert(data);
+        }
+    });
+    ws.close();
+    location.href = '/user/login?t='+rand;
+}
+
+
+
+
+
 
 /**
  * 显示所有在线列表

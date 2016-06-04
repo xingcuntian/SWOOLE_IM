@@ -52,7 +52,7 @@ HTML;
         $info['token']   = Filter::escape($msg['token']);
         $info['user_name'] = Filter::escape($msg['user_name']);
 
-        file_put_contents('sw.log',var_export($msg,true),FILE_APPEND);
+        file_put_contents('/zhang/IMlog/sw.log',var_export($msg,true),FILE_APPEND);
 
          $resMsg = array(
             'cmd' => 'login',
