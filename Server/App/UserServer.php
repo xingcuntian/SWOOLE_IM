@@ -94,7 +94,7 @@ HTML;
         $resMsg['user_name'] =   $info['user_name'];
         $resMsg['user_id']   =   $info['user_id'];
         unset($resMsg['data'],$resMsg['cmd']);
-        $this->users[$client_id] = $resMsg;
+        $this->users[$resMsg['user_id']] = $resMsg;
         $this->store->login($client_id, $resMsg);
 
 //        //广播给其它在线用户
