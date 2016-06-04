@@ -66,6 +66,10 @@ function listenEvent() {
                 actionlogin(message);
                 break;
 
+            case 'fromMsg':
+                ws.send($.toJSON({cmd : 'getOnline'}));
+                break;
+
             case 'getOnline':
                 showOnlineList(message.list);
                 break;

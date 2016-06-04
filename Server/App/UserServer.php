@@ -124,13 +124,16 @@ HTML;
         $list =  array();
         $userList =  $this->users;
         foreach($userList as $index => $val){
-            $list[$index] = array($val['user_name'],$val['user_id'],$val['fd']);
+            if($val['fd'] == $client_id){
+                 continue;
+            }
+            $list[] = array($val['user_name'],$val['user_id'],$val['fd']);
         }
 //        $users = $this->store->getOnlineUsers();
 //        $info = $this->store->getUsers(array_slice($users, 0, 100));
 //        $resMsg['users'] = $users;
 //        $resMsg['list'] = $info;
-        
+
         $resMsg['list'] = $list;
         file_put_contents('/zhang/IMlog/sw.log',var_export($resMsg,true),FILE_APPEND);
         $this->sendJson($client_id, $resMsg);
