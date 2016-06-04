@@ -212,11 +212,11 @@ HTML;
 
     function broadcast($current_session_id, $msg)
     {
-        foreach ($this->users as $client_id => $name)
+        foreach ($this->users as $key => $value)
         {
-            if ($current_session_id != $client_id)
+            if ($current_session_id != $value['fd'])
             {
-                $this->send($client_id, $msg);
+                $this->send($value['fd'], $msg);
             }
         }
     }
