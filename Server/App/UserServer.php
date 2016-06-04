@@ -77,6 +77,8 @@ HTML;
               //表示已经有人登录了 回复给登录用户
               $resMsg['fd']   = $login_client_id;
               $resMsg['data'] = '你的帐号在别的地方登录';
+
+             unset( $this->users[$login_client_id] );
              //将下线消息发送给之前的登录人
              $this->sendJson($login_client_id, $resMsg);
           }
@@ -122,7 +124,10 @@ HTML;
         $list =  array();
         $userList =  $this->users;
         foreach($userList as $index => $val){
-            $list[] = array($val['user_name'],$val['user_id'],$val['fd'],);
+            if($client_id == $val['fd']){
+                continue;
+            }
+            $list[$index] = array($val['user_name'],$val['user_id'],$val['fd']);
         }
 
 
