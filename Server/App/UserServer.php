@@ -124,9 +124,9 @@ HTML;
         $list =  array();
         $userList =  $this->users;
         foreach($userList as $index => $val){
-            if($val['fd'] == $client_id){
-                 continue;
-            }
+//            if($val['fd'] == $client_id){
+//                 continue;
+//            }
             $list[] = array($val['user_name'],$val['user_id'],$val['fd']);
         }
         $resMsg['list'] = $list;
