@@ -67,8 +67,7 @@ function listenEvent() {
                 break;
 
             case 'getOnline':
-                alert(message.list);
-                showOnlineList(message);
+                showOnlineList(message.list);
                 break;
 
         }

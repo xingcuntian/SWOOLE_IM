@@ -91,7 +91,7 @@ HTML;
         //把会话存起来
         $resMsg['user_name'] =   $info['user_name'];
         $resMsg['user_id']   =   $info['user_id'];
-        unset($resMsg['data']);
+        unset($resMsg['data'],$resMsg['cmd']);
         $this->users[$client_id] = $resMsg;
         $this->store->login($client_id, $resMsg);
 
@@ -116,21 +116,24 @@ HTML;
      */
     function cmd_getOnline($client_id, $msg)
     {
-
-
         $resMsg = array(
             'cmd' => 'getOnline',
         );
+        $list =  array();
+        $userList =  $this->users;
+        foreach($userList as $index => $val){
+            $list[] = array($val['user_name'],$val['user_id'],$val['fd'],);
+        }
+
 
         $msg = array_merge($resMsg,$msg,array('us'=>$this->users));
-
         file_put_contents('/zhang/IMlog/sw.log',var_export($msg,true),FILE_APPEND);
 
 //        $users = $this->store->getOnlineUsers();
 //        $info = $this->store->getUsers(array_slice($users, 0, 100));
 //        $resMsg['users'] = $users;
 //        $resMsg['list'] = $info;
-        $resMsg['list'] = $this->users;
+        $resMsg['list'] = $list;
         $this->sendJson($client_id, $resMsg);
     }
 
