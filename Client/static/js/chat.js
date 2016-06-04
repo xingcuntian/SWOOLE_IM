@@ -52,15 +52,22 @@ function listenEvent() {
     ws.onmessage = function (e) {
         var message = $.evalJSON(e.data);
         var cmd = message.cmd;
-        var rand = Math.random();
-
         switch(cmd)
         {
             case 'login_success':
                 alert(message.data);
+                //获取在线人数
+                ws.send($.toJSON({cmd : 'getOnline'}));
+
+                //获取历史记录
+                //ws.send($.toJSON({cmd : 'getHistory'}));
                 break;
             case 'login':
-                actionlogin();
+                actionlogin(message);
+                break;
+
+            case 'getOnline':
+                showOnlineList(message);
                 break;
 
         }
@@ -160,8 +167,9 @@ function selectUser(userid) {
 /*
 * 重复登录，退出当前帐号 跳转到登录页
 * */
-function actionlogin()
+function actionlogin(message)
 {
+    var rand = Math.random();
     alert(message.data);
     $.ajax({
         'url': '/user/logout?t='+rand,
@@ -180,35 +188,18 @@ function actionlogin()
     location.href = '/user/login?t='+rand;
 }
 
-
-
-
-
-
 /**
- * 显示所有在线列表
+ * 显示所有用户在线列表
  * @param dataObj
  */
 function showOnlineList(dataObj) {
-    var li = '';
-    var option = "<option value='0' id='user_all' >所有人</option>";
-
-    for (var i = 0; i < dataObj.list.length; i++) {
-        li = li + "<li id='inroom_" + dataObj.list[i].fd + "'>" +
-            "<a href=\"javascript:selectUser('"
-            + dataObj.list[i].fd + "')\">" + "<img src='" + dataObj.list[i].avatar
-            + "' width='50' height='50'></a></li>"
-
-        userlist[dataObj.list[i].fd] = dataObj.list[i].name;
-
-        if (dataObj.list[i].fd != client_id) {
-            option = option + "<option value='" + dataObj.list[i].fd + "' id='user_" + dataObj.list[i].fd + "'>"
-                + dataObj.list[i].name + "</option>"
-        }
+    for(i=0;i<dataObj.length;i++){
+         dandan.newuser('.ul_2',dataObj[i],i);//创建用户
     }
-    $('#left-userlist').html(li);
-    $('#userlist').html(option);
 }
+
+
+
 
 /**
  * 显示所有在线列表

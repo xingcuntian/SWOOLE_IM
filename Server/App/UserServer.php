@@ -89,16 +89,17 @@ HTML;
         $this->sendJson($client_id, $resMsg);
 
         //把会话存起来
-       /* $resMsg['user_name'] =   $info['user_name'];
+        $resMsg['user_name'] =   $info['user_name'];
         $resMsg['user_id']   =   $info['user_id'];
         unset($resMsg['data']);
         $this->users[$client_id] = $resMsg;
         $this->store->login($client_id, $resMsg);
 
-        //广播给其它在线用户
-        $resMsg['cmd'] = 'newUser';
-        //将上线消息发送给所有人
-        $this->broadcastJson($client_id, $resMsg);
+//        //广播给其它在线用户
+//        $resMsg['cmd'] = 'newUser';
+//        //将上线消息发送给所有人
+//        $this->broadcastJson($client_id, $resMsg);
+
         //用户登录消息
         $loginMsg = array(
             'cmd' => 'fromMsg',
@@ -107,8 +108,27 @@ HTML;
             'data' =>  $resMsg['user_name'] . "上线了",
         );
         $this->broadcastJson($client_id, $loginMsg);
-    */
-       }
+  }
+
+
+    /**
+     * 获取在线列表
+     */
+    function cmd_getOnline($client_id, $msg)
+    {
+        $resMsg = array(
+            'cmd' => 'getOnline',
+        );
+//        $users = $this->store->getOnlineUsers();
+//        $info = $this->store->getUsers(array_slice($users, 0, 100));
+//        $resMsg['users'] = $users;
+//        $resMsg['list'] = $info;
+        $resMsg['list'] = $this->users;
+        $this->sendJson($client_id, $resMsg);
+    }
+
+
+
 
 
 

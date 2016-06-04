@@ -13,30 +13,17 @@
 <script src="/static/js/jquery.json.js"></script>
 <script type="text/javascript" src="/static/js/config.js"></script>
 <script type="text/javascript" src="/static/js/chat.js"></script>
-
-
-
 <script type="text/javascript">
-//登陆的人
-//$admin_name=prompt("请输入你的名字","中国看笑话网");
-$admin_name = 'aaa';
-if($admin_name!=null){
-  if(!$admin_name.replace(/^\s\s*/, '').replace(/\s\s*$/, '')){
-    $admin_name="游客";
-  }
-}else{
-    $admin_name="游客";
-}
-
-//成员数组
-$arr_user=new Array(
-Array('蛋蛋','user_img/001.jpg'),
-Array('今心','user_img/002.jpg'),
-Array('老猪','user_img/003.jpg'),
-Array('涛涛','user_img/004.jpg'),
-Array('张三'),
-Array('李四'),
-Array('王五'))
+$admin_name = user_name;
+    //成员数组
+    $arr_user= new Array(
+    Array(user_name,'user_img/001.jpg'),
+//    Array('今心','user_img/002.jpg'),
+//    Array('老猪','user_img/003.jpg'),
+//    Array('涛涛','user_img/004.jpg'),
+//    Array('张三'),
+//    Array('李四'),
+//    Array('王五'))
 </script>
 <link href="/static/images/dandan.css" rel="stylesheet" media="screen" type="text/css" />
 <style type="text/css">
