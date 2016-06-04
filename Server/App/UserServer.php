@@ -52,12 +52,7 @@ HTML;
         $info['token']   = Filter::escape($msg['token']);
         $info['user_name'] = Filter::escape($msg['user_name']);
 
-        $tmp = array(
-           'client_id'=> $client_id,
-           'msg' => $msg
-          );
-         $tmp = array_merge($tmp,$info);
-         file_put_contents('sw.log',var_export($tmp,true),FILE_APPEND);
+        file_put_contents('sw.log',var_export($msg,true),FILE_APPEND);
 
          $resMsg = array(
             'cmd' => 'login',

@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>网页聊天</title>
-<script type="text/javascript" src="/static/js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/dandan.js"></script>
 <script type="text/javascript">
     var user_id = "<?php echo isset($_SESSION['user_id'])?$_SESSION['user_id']:''; ?>";

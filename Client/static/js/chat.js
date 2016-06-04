@@ -52,21 +52,25 @@ function listenEvent() {
     ws.onmessage = function (e) {
         var message = $.evalJSON(e.data);
         var cmd = message.cmd;
-
-        alert('cmd:'+cmd);
-        alert('data:'+message.data);
-        alert('fd:'+message.fd);
+        var rand = Math.random();
         if (cmd == 'login')
         {
           alert(message.data);
-         // $.get('http://sw.im.cc/user/logout');
-
-            $.get('http://sw.im.cc/user/logout', {}, function(data, status) {
-                alert('>>>>>'+status);
+            $.ajax({
+                'url': '/user/logout?t='+rand,
+                "cache": false,
+                "method": "POST",
+                 async:false,
+                //"dataType": "json",
+                "dataType": "jsonp",
+                jsonp:'callback',
+                jsonpCallback:"success_jsonpCallback",
+                'success': function (data) {
+                    alert(data);
+                }
             });
-
           ws.close();
-          location.href = '/user/login';
+          location.href = '/user/login?t='+rand;
           client_id = $.evalJSON(e.data).fd;
             //获取在线列表
             //ws.send($.toJSON({cmd : 'getOnline'}));
