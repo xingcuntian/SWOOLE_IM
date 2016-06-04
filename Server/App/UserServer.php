@@ -117,10 +117,15 @@ HTML;
     function cmd_getOnline($client_id, $msg)
     {
 
-        file_put_contents('/zhang/IMlog/sw.log',var_export($msg,true),FILE_APPEND);
+
         $resMsg = array(
             'cmd' => 'getOnline',
         );
+
+        $msg = array_merge($resMsg,$msg,array('us'=>$this->users));
+
+        file_put_contents('/zhang/IMlog/sw.log',var_export($msg,true),FILE_APPEND);
+
 //        $users = $this->store->getOnlineUsers();
 //        $info = $this->store->getUsers(array_slice($users, 0, 100));
 //        $resMsg['users'] = $users;
