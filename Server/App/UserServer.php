@@ -155,10 +155,6 @@ HTML;
         $this->log("onOffline: " . $client_id);
     }
 
-
-
-
-
     /**
      * 发送信息请求
      */
@@ -174,21 +170,30 @@ HTML;
         }
 
         //表示群发
-        if ($msg['channal'] == 0)
-        {
-            $this->broadcastJson($client_id, $resMsg);
-            $this->getSwooleServer()->task(serialize(array(
-                'cmd' => 'addHistory',
-                'msg' => $msg,
-                'fd'  => $client_id,
-            )), self::WORKER_HISTORY_ID);
+//        if ($msg['channal'] == 0)
+//        {
+//            $this->broadcastJson($client_id, $resMsg);
+//            $this->getSwooleServer()->task(serialize(array(
+//                'cmd' => 'addHistory',
+//                'msg' => $msg,
+//                'fd'  => $client_id,
+//            )), self::WORKER_HISTORY_ID);
+//        }
+//        //表示私聊
+//        elseif ($msg['channal'] == 1)
+//        {
+
+        $userList = $this->users;
+        $touser_id = 0;
+        foreach($userList as $index => $val){
+            if($val['fd'] == $msg['to']){
+                $touser_id = $val['user_id'];
+                break;
+            }
         }
-        //表示私聊
-        elseif ($msg['channal'] == 1)
-        {
             $this->sendJson($msg['to'], $resMsg);
-            $this->store->addHistory($client_id, $msg['data']);
-        }
+            $this->store->addHistory($msg['userid'], $msg['data'],$touser_id);
+      //  }
     }
 
 

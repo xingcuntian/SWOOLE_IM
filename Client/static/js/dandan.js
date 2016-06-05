@@ -315,7 +315,8 @@ function delete_user(id,user,img){
 		   alert("你还没选中跟哪个聊天，请点左边好友选中一个再聊");
 		   return false;
 		 }
-	 
+
+      var msg = {};
 	  var t=new Date().toLocaleTimeString();//当前时间
 	  if($("#texterea").val()){
 	  $("#user_con"+ing_user).append('<div class="my_say_con"><font color=\"#0000FF\">'+$admin_name+t+"</font><p><font color=\"#333333\">"+trim2(trim($("#texterea").val()))+'</font></p></div>');
@@ -323,7 +324,16 @@ function delete_user(id,user,img){
 	  $("#texterea").val("");
 	  $(".my_show").scrollTop($(".con_box").height()-$(".my_show").height());//让滚动滚到最底端
 
-          alert(ing_clientid);
+      //websocket start
+          var content = $("#texterea").val();
+              content  = content.replace(" ", "&nbsp;");
+              msg.cmd = 'message';
+              msg.to = ing_clientid;
+              msg.userid = user_id;
+              msg.data= content;
+              ws.send($.toJSON(msg));
+              alert(ing_clientid);
+         // websocket end
 
 	  //alert($(".con_box").height());
 	  //alert($("#user_con"+ing_user+" > .my_say_con").length);//聊天记录的个数

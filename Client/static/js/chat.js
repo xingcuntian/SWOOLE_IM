@@ -67,6 +67,7 @@ function listenEvent() {
                 break;
 
             case 'fromMsg':
+                alert(message.data);
               //  ws.send($.toJSON({cmd : 'getOnline'}));
                 break;
 

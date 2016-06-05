@@ -142,7 +142,7 @@ class File
         return is_file($this->online_dir.$userid);
     }
 
-    function addHistory($userid, $msg)
+    function addHistory($userid, $msg,$touserid=0)
     {
         $info = $this->getUser($userid);
 
@@ -150,6 +150,7 @@ class File
         $log['msg'] = $msg;
         $log['time'] = time();
         $log['type'] = empty($msg['type']) ? '' : $msg['type'];
+        $log['touserid'] = $touserid;
 
         $this->history[] = $log;
 
