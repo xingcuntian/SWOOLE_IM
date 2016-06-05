@@ -6,6 +6,7 @@ email:admin@seejoke.com
 */						
    window['dandan']={}
    var ing_user;//当前用户
+    var ing_clientid ; //发送的连接ID
    //浏览器
    function liulanqi(){
 	  var h=$(window).height();
@@ -215,15 +216,15 @@ function ing_my_user($this,arr,i,ing){
 }
 
 //创建标题栏和主控制（原是有一个主控制，忘了，就合在一起了，哈哈）
-function title_newuser(id,user,img){
+function title_newuser(id,user,clientid){
 	  if($("#"+id).length<1){
 	  $("#mid_top").append('<div id="'+id+'" class="list"><table border="0" cellspacing="0" cellpadding="0"><tr><td id="zi'+id+'" class="td_user td_user_click">'+user+'</td><td id="zino'+id+'" class="td_hide td_hide_click">X</td></tr></table></div>');
 
 	  //创建完成后给事件
 	  //alert('#'+id)
-	  $('#'+id).click(function(){title_newuser(id,user,img); });//给按钮加事件
+	  $('#'+id).click(function(){title_newuser(id,user,clientid); });//给按钮加事件
 	  //关闭
-	  $("#zino"+id).click(function(){delete_user(id,user,img); return false });//关闭打开的
+	  $("#zino"+id).click(function(){delete_user(id,user,clientid); return false });//关闭打开的
 	  
 	  
 	  }else{
@@ -236,9 +237,11 @@ function title_newuser(id,user,img){
 	  my_user_con(user,id);
 	  
 	  //创建头像
-	  my_user_head(user,id,img);
+	  my_user_head(user,id,clientid);
 	  
 	  ing_user=id;//当前用户
+      ing_clientid = clientid;
+
 	  //alert(ing_user);
 	  
 	  $("#right_mid").html("");//清空右边的内容
@@ -252,9 +255,7 @@ function my_siblings($this){
 //创建右边的头像
 function my_user_head(user,id,img){
 	if($(".head"+id).length<1){
-		if(!img){//头像为空的时候
-			img="user_img/0.jpg";
-		}
+	   img="user_img/0.jpg";
        $("#right_top").append('<div class="head'+id+'"><p><img src="'+img+'" alt="'+user+'" /></p>'+user+'<div>');
 	   $(".head"+id).hide();//默认是隐藏，让它有一点效果
 	}
@@ -321,6 +322,9 @@ function delete_user(id,user,img){
 	  $("#right_mid").html($("#texterea").val());//右边显示刚发送的文字
 	  $("#texterea").val("");
 	  $(".my_show").scrollTop($(".con_box").height()-$(".my_show").height());//让滚动滚到最底端
+
+          alert(ing_clientid);
+
 	  //alert($(".con_box").height());
 	  //alert($("#user_con"+ing_user+" > .my_say_con").length);//聊天记录的个数
 	  //alert(ing_user)

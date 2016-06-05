@@ -123,7 +123,7 @@ HTML;
         $list =  array();
         $userList =  $this->users;
         foreach($userList as $index => $val){
-            $list[] = array($val['user_name'],$val['user_id'],$val['fd']);
+            $list[] = array($val['user_name'],$val['fd'],$val['user_id']);
         }
         $resMsg['list'] = $list;
         $resMsg['userList'] = $userList;
@@ -157,7 +157,7 @@ HTML;
 
 
 
-    
+
 
     /**
      * 发送信息请求

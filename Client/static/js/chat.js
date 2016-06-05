@@ -67,7 +67,7 @@ function listenEvent() {
                 break;
 
             case 'fromMsg':
-                ws.send($.toJSON({cmd : 'getOnline'}));
+              //  ws.send($.toJSON({cmd : 'getOnline'}));
                 break;
 
             case 'getOnline':
@@ -203,6 +203,7 @@ function showOnlineList(dataObj) {
          dandan.newuser('.ul_2',dataObj[i],i);//创建用户
     }
 }
+
 
 
 

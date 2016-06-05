@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>网页聊天</title>
 <script type="text/javascript" src="/static/js/jquery.js"></script>
-<script type="text/javascript" src="/static/js/dandan.js"></script>
+
 <script type="text/javascript">
     var user_id = "<?php echo isset($_SESSION['user_id'])?$_SESSION['user_id']:''; ?>";
     var token = "<?php echo isset($_SESSION['token'])?$_SESSION['token']:''; ?>";
@@ -13,11 +13,12 @@
 <script src="/static/js/jquery.json.js"></script>
 <script type="text/javascript" src="/static/js/config.js"></script>
 <script type="text/javascript" src="/static/js/chat.js"></script>
+<script type="text/javascript" src="/static/js/dandan.js"></script>
 <script type="text/javascript">
 $admin_name = user_name;
     //成员数组
     $arr_user= new Array(
-        Array(user_name,'user_img/001.jpg')
+        Array(user_name,'0',user_id)
     )
 //    Array('今心','user_img/002.jpg'),
 //    Array('老猪','user_img/003.jpg'),
