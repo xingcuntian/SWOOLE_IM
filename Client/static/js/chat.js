@@ -206,6 +206,13 @@ function showOnlineList(dataObj) {
 
 
 
+//function showMsgData(dataObj) {
+//    var t = new Date().toLocaleTimeString();//当前时间
+//    $("#user_con" + ing_user).append('<div class="my_say_con"><font color=\"#0000FF\">' +dataObj.username + t + "</font><p><font color=\"#333333\">" + trim2(trim(dataObj.data)) + '</font></p></div>');
+//    $("#right_mid").html($("#texterea").val());//右边显示刚发送的文字
+//    $("#texterea").val("");
+//    $(".my_show").scrollTop($(".con_box").height() - $(".my_show").height());//让滚动滚到最底端
+//}
 
 /**
  * 显示所有在线列表

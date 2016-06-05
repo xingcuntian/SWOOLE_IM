@@ -11,6 +11,7 @@ class UserServer extends Swoole\Protocol\WebSocket
     protected  $store;
     protected  $redis;
     protected  $users;
+    const  MESSAGE_MAX_LEN     = 1024; //单条消息不得超过1K
     const  TOKEN = 'SWOOLE_IM';
     const  ONLINE_CONNECTION = 'hash_online_connect';
 
@@ -51,10 +52,7 @@ HTML;
         $info['user_id'] = Filter::escape($msg['user_id']);
         $info['token']   = Filter::escape($msg['token']);
         $info['user_name'] = Filter::escape($msg['user_name']);
-
-        file_put_contents('/zhang/IMlog/sw.log',var_export($msg,true),FILE_APPEND);
-
-         $resMsg = array(
+        $resMsg = array(
             'cmd' => 'login',
             'fd' => $client_id,
             'data' => '请登录'
@@ -78,7 +76,7 @@ HTML;
               $resMsg['fd']   = $login_client_id;
               $resMsg['data'] = '你的帐号在别的地方登录';
 
-             unset( $this->users[$login_client_id] );
+             unset( $this->users[$info['user_id']] );
              //将下线消息发送给之前的登录人
              $this->sendJson($login_client_id, $resMsg);
           }
@@ -108,13 +106,14 @@ HTML;
             'from' => 0,
             'channal' => 0,
             'data' =>  $resMsg['user_name'] . "上线了",
+            'username' => $resMsg['user_name']
         );
         $this->broadcastJson($client_id, $loginMsg);
   }
 
 
     /**
-     * 获取在线列表
+     * 获取在线列表 ok
      */
     function cmd_getOnline($client_id, $msg)
     {
@@ -124,9 +123,6 @@ HTML;
         $list =  array();
         $userList =  $this->users;
         foreach($userList as $index => $val){
-//            if($val['fd'] == $client_id){
-//                 continue;
-//            }
             $list[] = array($val['user_name'],$val['user_id'],$val['fd']);
         }
         $resMsg['list'] = $list;
@@ -134,6 +130,67 @@ HTML;
         file_put_contents('/zhang/IMlog/sw.log',var_export($resMsg,true),FILE_APPEND);
         $this->sendJson($client_id, $resMsg);
     }
+
+
+    /**
+     * 下线时，通知所有人
+     */
+    function onExit($client_id)
+    {
+        $userInfo = $this->store->getUser($client_id);
+        if ($userInfo)
+        {
+            $resMsg = array(
+                'cmd' => 'offline',
+                'fd' => $client_id,
+                'from' => 0,
+                'channal' => 0,
+                'data' => $userInfo['name'] . "下线了",
+            );
+            unset( $this->users[$userInfo['user_id']] );
+            $this->store->logout($client_id);
+            //将下线消息发送给所有人
+            $this->broadcastJson($client_id, $resMsg);
+        }
+        $this->log("onOffline: " . $client_id);
+    }
+
+
+
+    
+
+    /**
+     * 发送信息请求
+     */
+    function cmd_message($client_id, $msg)
+    {
+        $resMsg = $msg;
+        $resMsg['cmd'] = 'fromMsg';
+
+        if (strlen($msg['data']) > self::MESSAGE_MAX_LEN)
+        {
+            $this->sendErrorMessage($client_id, 102, 'message max length is '.self::MESSAGE_MAX_LEN);
+            return;
+        }
+
+        //表示群发
+        if ($msg['channal'] == 0)
+        {
+            $this->broadcastJson($client_id, $resMsg);
+            $this->getSwooleServer()->task(serialize(array(
+                'cmd' => 'addHistory',
+                'msg' => $msg,
+                'fd'  => $client_id,
+            )), self::WORKER_HISTORY_ID);
+        }
+        //表示私聊
+        elseif ($msg['channal'] == 1)
+        {
+            $this->sendJson($msg['to'], $resMsg);
+            $this->store->addHistory($client_id, $msg['data']);
+        }
+    }
+
 
 
 
