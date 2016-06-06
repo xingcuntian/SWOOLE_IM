@@ -68,6 +68,8 @@ function listenEvent() {
 
             case 'fromMsg':
                 alert(message.data);
+                findUserMsg(message);
+
               //  ws.send($.toJSON({cmd : 'getOnline'}));
                 break;
 
@@ -203,6 +205,15 @@ function showOnlineList(dataObj) {
     for(i=0;i<dataObj.length;i++){
          dandan.newuser('.ul_2',dataObj[i],i);//创建用户
     }
+}
+
+/*
+* 遍历用户列表，找出 clientID，使其自动执行click事件
+* */
+function findUserMsg(dataObj)
+{
+   var id = $(".client_"+dataObj.to).attr('id');
+    $("#"+id).click();
 }
 
 

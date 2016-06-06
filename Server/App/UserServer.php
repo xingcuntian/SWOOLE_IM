@@ -105,6 +105,7 @@ HTML;
             'cmd' => 'fromMsg',
             'from' => 0,
             'channal' => 0,
+            'to' => 0,
             'data' =>  $resMsg['user_name'] . "上线了",
             'username' => $resMsg['user_name']
         );
