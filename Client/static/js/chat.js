@@ -66,6 +66,12 @@ function listenEvent() {
                 actionlogin(message);
                 break;
 
+            case 'newUser':
+                    $("#msg_win").css("display","block");
+                    $("#msg_title").text(message.from_username+' 上线了');
+                    $("#msg_content").text(message.data);
+                    break;
+
             case 'fromMsg':
                 ws.send($.toJSON({cmd : 'getOnline'}));
                 findUserMsg(message);
