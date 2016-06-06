@@ -319,14 +319,14 @@ function delete_user(id,user,img){
       var msg = {};
 	  var t=new Date().toLocaleTimeString();//当前时间
 	  if($("#texterea").val()){
+          var content = $("#texterea").val();
+              content = content.replace(" ", "&nbsp;");
 	  $("#user_con"+ing_user).append('<div class="my_say_con"><font color=\"#0000FF\">'+$admin_name+t+"</font><p><font color=\"#333333\">"+trim2(trim($("#texterea").val()))+'</font></p></div>');
 	  $("#right_mid").html($("#texterea").val());//右边显示刚发送的文字
 	  $("#texterea").val("");
 	  $(".my_show").scrollTop($(".con_box").height()-$(".my_show").height());//让滚动滚到最底端
 
       //websocket start
-          var content = $("#texterea").val();
-              content  = content.replace(" ", "&nbsp;");
               msg.cmd = 'message';
               msg.to = ing_clientid;
               msg.userid = user_id;
