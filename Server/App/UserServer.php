@@ -109,7 +109,9 @@ HTML;
             'from' => 0,
             'channal' => 0,
             'to' => 0,
-            'data' =>  $resMsg['user_name'] . "上线了",
+            'fromuserid' => $resMsg['user_id'],
+            'from_username' => $resMsg['user_name'],
+            'data' =>  " hi 我上线了 让咱们 hi 起来吧！",
             'username' => $resMsg['user_name']
         );
         $this->broadcastJson($client_id, $loginMsg);

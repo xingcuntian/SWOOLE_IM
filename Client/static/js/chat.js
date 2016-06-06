@@ -67,10 +67,8 @@ function listenEvent() {
                 break;
 
             case 'fromMsg':
-                alert(message.data);
+                ws.send($.toJSON({cmd : 'getOnline'}));
                 findUserMsg(message);
-
-              //  ws.send($.toJSON({cmd : 'getOnline'}));
                 break;
 
             case 'getOnline':
@@ -212,7 +210,7 @@ function showOnlineList(dataObj) {
 * */
 function findUserMsg(dataObj)
 {
-   var id = $(".client_"+dataObj.from_clientid).attr('id');
+   var id = $(".client_"+dataObj.fromuserid).attr('id');
    var ing_user =  $("#"+id).attr("data-index");
    $("#"+id).click();
    var t= new Date().toLocaleTimeString();//当前时间
