@@ -1,6 +1,7 @@
 var ws = {};
 var client_id = 0;
 var userlist = {};
+var showMsgHtml= "<div id=\"msg_win\" style=\"display:block;top:450px;visibility:visible;opacity:2;\"><div class=\"icos\"></a><a id=\"msg_close\" title=\"关闭\" href=\"javascript:void 0\">×</a></div><div id=\"msg_title\"></div><div id=\"msg_content\"></div></div>";
 
 $(document).ready(function () {
     //使用原生WebSocket
@@ -55,7 +56,7 @@ function listenEvent() {
         switch(cmd)
         {
             case 'login_success':
-                alert(message.data);
+               // alert(message.data);
                 //获取在线人数
                 ws.send($.toJSON({cmd : 'getOnline'}));
 
@@ -67,10 +68,13 @@ function listenEvent() {
                 break;
 
             case 'newUser':
-                    $("#msg_win").css("display","block");
+                    $(document.body).append(showMsgHtml);
                     $("#msg_title").text(message.from_username+' 上线了');
                     $("#msg_content").text(message.data);
-                    break;
+                    setTimeout(function() {
+                        $("#msg_win").hide();
+                     },4000);
+                break;
 
             case 'fromMsg':
                 ws.send($.toJSON({cmd : 'getOnline'}));

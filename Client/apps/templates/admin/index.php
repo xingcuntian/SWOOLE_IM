@@ -89,12 +89,6 @@ $admin_name = user_name;
   </div>
 </div>
 
-<div id="msg_win" style="display:none;top:490px;visibility:visible;opacity:1;">
-    <div class="icos"><a id="msg_min" title="最小化" href="javascript:void 0">_</a><a id="msg_close" title="关闭" href="javascript:void 0">×</a></div>
-    <div id="msg_title"></div>
-    <div id="msg_content"></div>
-</div>
-<script type="text/javascript" src="/static/js/Popup.js"></script>
 
 </body>
 </html>
