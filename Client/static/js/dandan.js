@@ -198,7 +198,7 @@ function newuser($this,arr,i,ing){
 	   $($this).prepend('<li id="'+id+i+'">'+arr[0]+'</li>');
 	   $('#'+id+i).click(function(){title_newuser('title_'+id+ing,arr[0],arr[1]); });//给按钮加事件
 	}else{//创建好友
-	  $($this).append('<li class="client_"'+arr[1]+' id="'+id+i+'">'+arr[0]+'</li>');
+	  $($this).append('<li class="client_'+arr[1]+'" id="'+id+i+'">'+arr[0]+'</li>');
 	  $('#'+id+i).click(function(){title_newuser('title_'+id+i,arr[0],arr[1]); });//给按钮加事件
 	}
 	hover_user('#'+id+i);//给经过触发	
