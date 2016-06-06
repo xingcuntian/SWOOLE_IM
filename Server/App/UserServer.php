@@ -189,6 +189,9 @@ HTML;
 
         $toUserInfo = $this->clientUser[$client_id];
         $touser_id  = $toUserInfo['user_id'];
+        $resMsg['touser_id'] = $touser_id;
+        $resMsg['user_name'] = $toUserInfo['user_name'];
+
 
 //        $userList = $this->users;
 //        $touser_id = 0;

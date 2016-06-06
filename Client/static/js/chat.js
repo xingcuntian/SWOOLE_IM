@@ -213,7 +213,7 @@ function showOnlineList(dataObj) {
 function findUserMsg(dataObj)
 {
    var id = $(".client_"+dataObj.to).attr('id');
-    $("#"+id).click();
+   $("#"+id).click();
 }
 
 
