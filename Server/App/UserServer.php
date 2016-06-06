@@ -187,10 +187,15 @@ HTML;
 //        elseif ($msg['channal'] == 1)
 //        {
 
-        $toUserInfo = $this->clientUser[$client_id];
+        $toUserInfo = $this->clientUser[$msg['to']];
+        $fromUserInfo = $this->users[$resMsg['fromuserid']];
+
         $touser_id  = $toUserInfo['user_id'];
         $resMsg['touser_id'] = $touser_id;
-        $resMsg['user_name'] = $toUserInfo['user_name'];
+        $resMsg['touser_name'] = $toUserInfo['user_name'];
+        $resMsg['from_clientid'] =  $fromUserInfo['fd'];
+        $resMsg['from_username'] =  $fromUserInfo['user_name'];
+        $resMsg['from_userid']   =  $fromUserInfo['user_id'];
 
 
 //        $userList = $this->users;
@@ -204,7 +209,7 @@ HTML;
             $this->sendJson($msg['to'], $resMsg);
 
             file_put_contents('/zhang/IMlog/sw.log',var_export($resMsg,true),FILE_APPEND);
-            $this->store->addHistory($msg['userid'], $msg['data'],$touser_id);
+            $this->store->addHistory($msg['fromuserid'], $msg['data'],$touser_id);
       //  }
     }
 

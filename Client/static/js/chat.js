@@ -212,8 +212,12 @@ function showOnlineList(dataObj) {
 * */
 function findUserMsg(dataObj)
 {
-   var id = $(".client_"+dataObj.to).attr('id');
+   var id = $(".client_"+dataObj.from_clientid).attr('id');
+   var ing_user =  $("#"+id).attr("data-index");
    $("#"+id).click();
+   var t= new Date().toLocaleTimeString();//当前时间
+   $("#user_con"+ing_user).append('<div class="my_say_con"><font color=\"#0000FF\">'+dataObj.from_username+t+"</font><p><font color=\"#333333\">"+dataObj.data+'</font></p></div>');
+   $("#right_mid").html(dataObj.data);//右边显示刚发送的文字
 }
 
 
