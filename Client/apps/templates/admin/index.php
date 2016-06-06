@@ -28,7 +28,7 @@ $admin_name = user_name;
 //    Array('王五'))
 </script>
 <link href="/static/images/dandan.css" rel="stylesheet" media="screen" type="text/css" />
-<link href="/static/images/Propup.css" rel="stylesheet" media="screen" type="text/css" />
+<link href="/static/images/css/Propup.css" rel="stylesheet" media="screen" type="text/css" />
 <style type="text/css">
 
 </style>
