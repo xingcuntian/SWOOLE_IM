@@ -11,6 +11,7 @@ class UserServer extends Swoole\Protocol\WebSocket
     protected  $store;
     protected  $redis;
     protected  $users;
+    protected  $clientUser;
     const  MESSAGE_MAX_LEN     = 1024; //单条消息不得超过1K
     const  TOKEN = 'SWOOLE_IM';
     const  ONLINE_CONNECTION = 'hash_online_connect';
@@ -75,8 +76,7 @@ HTML;
               //表示已经有人登录了 回复给登录用户
               $resMsg['fd']   = $login_client_id;
               $resMsg['data'] = '你的帐号在别的地方登录';
-
-             unset( $this->users[$info['user_id']] );
+              unset( $this->users[$info['user_id']],$this->clientUser[$login_client_id] );
              //将下线消息发送给之前的登录人
              $this->sendJson($login_client_id, $resMsg);
           }
@@ -92,7 +92,10 @@ HTML;
         $resMsg['user_name'] =   $info['user_name'];
         $resMsg['user_id']   =   $info['user_id'];
         unset($resMsg['data'],$resMsg['cmd']);
+
         $this->users[$resMsg['user_id']] = $resMsg;
+        $this->clientUser[$client_id] = $resMsg;
+
         $this->store->login($client_id, $resMsg);
 
 //        //广播给其它在线用户
@@ -146,7 +149,7 @@ HTML;
                 'fd' => $client_id,
                 'from' => 0,
                 'channal' => 0,
-                'data' => $userInfo['name'] . "下线了",
+                'data' => $userInfo['user_name'] . "下线了",
             );
             unset( $this->users[$userInfo['user_id']] );
             $this->store->logout($client_id);
@@ -184,15 +187,20 @@ HTML;
 //        elseif ($msg['channal'] == 1)
 //        {
 
-        $userList = $this->users;
-        $touser_id = 0;
-        foreach($userList as $index => $val){
-            if($val['fd'] == $msg['to']){
-                $touser_id = $val['user_id'];
-                break;
-            }
-        }
+        $toUserInfo = $this->clientUser[$client_id];
+        $touser_id  = $toUserInfo['user_id'];
+
+//        $userList = $this->users;
+//        $touser_id = 0;
+//        foreach($userList as $index => $val){
+//            if($val['fd'] == $msg['to']){
+//                $touser_id = $val['user_id'];
+//                break;
+//            }
+//        }
             $this->sendJson($msg['to'], $resMsg);
+
+            file_put_contents('/zhang/IMlog/sw.log',var_export($resMsg,true),FILE_APPEND);
             $this->store->addHistory($msg['userid'], $msg['data'],$touser_id);
       //  }
     }
