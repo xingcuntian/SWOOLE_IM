@@ -175,7 +175,7 @@ $("#texterea").hover(
   }
 );
 //alert($admin_name);
-$("#right_foot").html('<p><img src="images/head.jpg" alt="头象" /></p>'+$admin_name);
+$("#right_foot").html('<p><img src="/static/images/head.jpg" alt="头象" /></p>'+$admin_name);
 
 
 //过滤所有的空格
@@ -255,7 +255,7 @@ function my_siblings($this){
 //创建右边的头像
 function my_user_head(user,id,img){
 	if($(".head"+id).length<1){
-	   img="user_img/0.jpg";
+	   img="/static/user_img/0.jpg";
        $("#right_top").append('<div class="head'+id+'"><p><img src="'+img+'" alt="'+user+'" /></p>'+user+'<div>');
 	   $(".head"+id).hide();//默认是隐藏，让它有一点效果
 	}
@@ -332,7 +332,6 @@ function delete_user(id,user,img){
               msg.fromuserid = user_id;
               msg.data= content;
               ws.send($.toJSON(msg));
-              alert(ing_clientid);
          // websocket end
 
 	  //alert($(".con_box").height());

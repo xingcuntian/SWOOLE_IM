@@ -114,6 +114,7 @@ HTML;
             'data' =>  " hi 我上线了 让咱们 hi 起来吧！",
             'username' => $resMsg['user_name']
         );
+        file_put_contents('/zhang/IMlog/sw.log',var_export($loginMsg,true),FILE_APPEND);
         $this->broadcastJson($client_id, $loginMsg);
   }
 
