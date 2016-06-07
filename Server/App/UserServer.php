@@ -140,15 +140,26 @@ HTML;
      */
     function cmd_getHistory($client_id, $msg)
     {
-        $task['fd'] = $client_id;
-        $task['cmd'] = 'getHistory';
-        $task['offset'] = '0,100';
+        $resMsg = array(
+            'cmd' => 'gethistory',
+        );
         $history =  $this->store->getHistory();
+        $to_userid = $msg['touser_id'];
+        $userid    = $msg['user_id'];
+        $page  = $msg['page'];
+        $limit = 10;
+        $data  = array();
+        $key  = $userid.'_'.$to_userid;
+        $key1 = $to_userid.'_'.$userid;
+        $data = isset($history[$key])?$history[$key]:array();
+        $data = (empty($data) && isset($history[$key1])) ? $history[$key1] :array();
+        $resMsg['data'] = $data;
+
         file_put_contents('/zhang/IMlog/swhis.log',var_export($history,true),FILE_APPEND);
 
-        //在task worker中会直接发送给客户端
-//        $this->getSwooleServer()->task(serialize($task), self::WORKER_HISTORY_ID);
-    }
+        $this->sendJson($client_id, $resMsg);
+
+     }
 
 
 

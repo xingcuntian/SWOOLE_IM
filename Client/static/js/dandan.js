@@ -378,8 +378,8 @@ function showHistory(id){
   var user  = $("#"+id).attr("class");
   var touser_id = user.replace("client_", "");
       msg.cmd = 'getHistory';
-      msg.to = touser_id;
+      msg.touser_id = touser_id;
       msg.user_id = user_id;
-      msg.limit = 10;
+      msg.page = 1;
       ws.send($.toJSON(msg));
 }

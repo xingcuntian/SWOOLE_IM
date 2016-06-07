@@ -67,8 +67,8 @@ function listenEvent() {
                 actionlogin(message);
                 break;
 
-            case 'newUser':
-            case 'offline':
+            case 'newUser': //新用户上线
+            case 'offline': //用户下线
                  ws.send($.toJSON({cmd : 'getOnline'}));
                  if($("#msg_win").length  >0){
                       $("#msg_win").show();
@@ -82,12 +82,16 @@ function listenEvent() {
                      },4000);
                 break;
 
-            case 'fromMsg':
+            case 'fromMsg': //消息来临时
                 //ws.send($.toJSON({cmd : 'getOnline'}));
                 findUserMsg(message,ws);
                 break;
 
-            case 'getOnline':
+            case 'gethistory': //消息记录
+                    alert(message.data);
+                break;
+
+            case 'getOnline':  //在线列表
                 showOnlineList(message.list);
                 break;
 

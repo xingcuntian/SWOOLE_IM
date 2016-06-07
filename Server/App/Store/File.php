@@ -145,11 +145,10 @@ class File
     function addHistory($userid, $msg,$touserid=0)
     {
         $info = $this->getUser($userid);
-
-        $log['user'] = $info;
+        //$log['user'] = $info;
+        $log['user_name'] = $info['user_name'];
         $log['msg'] = $msg;
         $log['time'] = time();
-        $log['type'] = empty($msg['type']) ? '' : $msg['type'];
         $log['touserid'] = $touserid;
 
         $key  = $userid.'_'.$touserid;
