@@ -152,7 +152,13 @@ class File
         $log['type'] = empty($msg['type']) ? '' : $msg['type'];
         $log['touserid'] = $touserid;
 
-        $this->history[] = $log;
+        $key  = $userid.'_'.$touserid;
+        $key1 = $touserid.'_'.$userid;
+        if(!isset($this->history[$key])){
+            $key = $key1;
+        }
+        $this->history[$key][] = $log;
+
 
         if (count($this->history) > $this->history_max_size)
         {

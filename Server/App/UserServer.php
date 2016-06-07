@@ -98,11 +98,6 @@ HTML;
 
         $this->store->login($resMsg['user_id'], $resMsg);
 
-//        //广播给其它在线用户
-//        $resMsg['cmd'] = 'newUser';
-//        //将上线消息发送给所有人
-//        $this->broadcastJson($client_id, $resMsg);
-
         //用户登录消息
         $loginMsg = array(
             'cmd' => 'newUser',
@@ -141,6 +136,23 @@ HTML;
 
 
     /**
+     * 获取历史聊天记录
+     */
+    function cmd_getHistory($client_id, $msg)
+    {
+        $task['fd'] = $client_id;
+        $task['cmd'] = 'getHistory';
+        $task['offset'] = '0,100';
+        $history =  $this->store->getHistory();
+        file_put_contents('/zhang/IMlog/swhis.log',var_export($history,true),FILE_APPEND);
+
+        //在task worker中会直接发送给客户端
+//        $this->getSwooleServer()->task(serialize($task), self::WORKER_HISTORY_ID);
+    }
+
+
+
+    /**
      * 下线时，通知所有人
      */
     function onExit($client_id)
@@ -164,6 +176,7 @@ HTML;
         }
         $this->log("onOffline: " . $client_id);
     }
+
 
     /**
      * 发送信息请求
@@ -202,28 +215,11 @@ HTML;
         $resMsg['from_clientid'] =  $fromUserInfo['fd'];
         $resMsg['from_username'] =  $fromUserInfo['user_name'];
         $resMsg['from_userid']   =  $fromUserInfo['user_id'];
-
-
-//        $userList = $this->users;
-//        $touser_id = 0;
-//        foreach($userList as $index => $val){
-//            if($val['fd'] == $msg['to']){
-//                $touser_id = $val['user_id'];
-//                break;
-//            }
-//        }
-            $this->sendJson($msg['to'], $resMsg);
-
-            file_put_contents('/zhang/IMlog/sw.log',var_export($resMsg,true),FILE_APPEND);
-            $this->store->addHistory($resMsg['from_userid'], $msg['data'],$touser_id);
+        $this->sendJson($msg['to'], $resMsg);
+        file_put_contents('/zhang/IMlog/sw.log',var_export($resMsg,true),FILE_APPEND);
+        $this->store->addHistory($resMsg['from_userid'], $msg['data'],$touser_id);
       //  }
     }
-
-
-
-
-
-
 
 
     /**
@@ -303,88 +299,6 @@ HTML;
 
 
 
-
-
-
-    ///---------------------------------------------
-
-    /*  getRedisInstance
-     *  实例化 redis
-     * */
-    public static function getRedisInstance()
-    {
-        $config = self::$clconfig;
-        if(!(self::$_redisClient instanceof Swoole\Redis))
-        {
-            try{
-               self::$_redisClient = new Swoole\Redis($config['redis']);
-            }catch(\Exception $e)
-            {
-                self::$_redisClient = NULL;
-            }
-        }
-        return self::$_redisClient;
-    }
-
-    /*  getMysqlInstance
-    *   实例化 mysql
-    * */
-    public static function getMysqlInstance()
-    {
-        $config = self::$clconfig;
-        if(!(self::$_mysqlClient instanceof Swoole\Database))
-        {
-            try{
-                //$db = new  Swoole\Database( $config['dbmaster'] );
-
-                self::$_mysqlClient = new Swoole\Database($config['dbmaster']);
-            }catch(\Exception $e)
-            {
-                self::$_mysqlClient = NULL;
-            }
-        }
-        return self::$_mysqlClient;
-    }
-
-
-    /*setSession
-     * 实例化SESSION
-     * */
-  public  static  function getSession()
-  {
-
-      if(!(self::$_sessionClient instanceof Swoole\Session))
-      {
-          try{
-              $conf = array(
-                  'type' => '0',
-                  'cache_dir' => WEBPATH.'/cache/filecache/'
-              );
-              $filecache = Swoole\Cache::create($conf);
-              self::$_sessionClient = new Swoole\Session($filecache);
-          }catch(\Exception $e)
-          {
-              self::$_sessionClient = NULL;
-          }
-      }
-      return self::$_sessionClient;
-  }
-
-    /*getUserData
-     *获取用户信息
-     *@return array
-     * */
-    public static function getUserData($username,$password)
-    {
-        $apt =  self::getMysqlInstance();
-        $apt->db_apt->from('users');
-        $apt->db_apt->equal('username', $username);
-        $apt->db_apt->equal('password', ($password));
-        $res = $apt->db_apt->getall();
-        return $res;
-    }
-
-
     function onTask($serv, $task_id, $from_id, $data)
     {
         $req = unserialize($data);
@@ -404,18 +318,14 @@ HTML;
                         $this->sendJson(intval($req['fd']), $history);
                     }
                     break;
-                case 'addHistory':
-                    if (empty($req['msg']))
-                    {
-                        $req['msg'] = '';
-                    }
-                    $this->store->addHistory($req['fd'], $req['msg']);
-                    break;
+
                 default:
                     break;
             }
         }
     }
+
+
 
     function onFinish($serv, $task_id, $data)
     {
