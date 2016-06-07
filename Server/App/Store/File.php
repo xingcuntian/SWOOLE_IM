@@ -146,6 +146,7 @@ class File
     {
         $info = $this->getUser($userid);
         //$log['user'] = $info;
+        $log['user_id'] = $info['user_id'];
         $log['user_name'] = $info['user_name'];
         $log['msg'] = $msg;
         $log['time'] = time();

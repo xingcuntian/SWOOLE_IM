@@ -278,6 +278,9 @@ HTML;
     {
         $tmp = array('return'=>array('client_id'=>$client_id,'msg'=>$array));
 
+        file_put_contents('/zhang/IMlog/send.log',var_export($tmp,true),FILE_APPEND);
+
+
         $msg = json_encode($array);
         if ($this->send($client_id, $msg) === false)
         {
