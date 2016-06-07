@@ -196,6 +196,10 @@ function newuser($this,arr,i,ing){
 
 	//alert(ing)
 	if(ing!=undefined){//创建最近聊天
+        var ischid = $($this).find("#"+id+i+"");
+        if(ischid.length > 0){
+               return true;
+        }
 	   //alert("最近聊天为真");
 	   $($this).prepend('<li  data-index="title_'+id+i+'"  class="client_'+arr[2]+'"  id="'+id+i+'">'+arr[0]+'</li>');
 	   $('#'+id+i).click(function(){title_newuser('title_'+id+ing,arr[0],arr[1]); });//给按钮加事件
@@ -342,9 +346,9 @@ function delete_user(id,user,img){
 	   var ing_id=ing_user.substring(10,ing_user.length);
 	   //alert(ing_id);
 	   if($("#usering"+ing_id).length<1){//创建最近聊天人
-	       dandan.newuser('.ul_1',$arr_user[ing_id],'ing'+ing_id,ing_id);//创建最近聊天
+	       dandan.newuser('.ul_1',$arr_user[ing_id],ing_id,ing_id);//创建最近聊天
 	   }else{
-		   ing_my_user('.ul_1',$arr_user[ing_id],'ing'+ing_id,ing_id);//更新最近聊天的位置   
+		   ing_my_user('.ul_1',$arr_user[ing_id],ing_id,ing_id);//更新最近聊天的位置
 	   }
       }else{
 		alert("你输入的内容为空")  
