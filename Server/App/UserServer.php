@@ -215,7 +215,7 @@ HTML;
             $this->sendJson($msg['to'], $resMsg);
 
             file_put_contents('/zhang/IMlog/sw.log',var_export($resMsg,true),FILE_APPEND);
-            $this->store->addHistory($msg['fromuserid'], $msg['data'],$touser_id);
+            $this->store->addHistory($msg['from_userid'], $msg['data'],$touser_id);
       //  }
     }
 
