@@ -96,7 +96,7 @@ HTML;
         $this->users[$resMsg['user_id']] = $resMsg;
         $this->clientUser[$client_id] = $resMsg;
 
-        $this->store->login($client_id, $resMsg);
+        $this->store->login($resMsg['user_id'], $resMsg);
 
 //        //广播给其它在线用户
 //        $resMsg['cmd'] = 'newUser';
@@ -158,7 +158,7 @@ HTML;
                 'data' =>  " hi 我有事先离开会！ 稍等一会会，马上回来！！！",
             );
             unset( $this->users[$userInfo['user_id']] );
-            $this->store->logout($client_id);
+            $this->store->logout($userInfo['user_id']);
             //将下线消息发送给所有人
             $this->broadcastJson($client_id, $resMsg);
         }
