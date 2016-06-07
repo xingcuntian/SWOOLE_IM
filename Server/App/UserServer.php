@@ -111,6 +111,7 @@ HTML;
             'to' => 0,
             'fromuserid' => $resMsg['user_id'],
             'from_username' => $resMsg['user_name'],
+            'title' =>  'hello '.$resMsg['user_name'].'上线了',
             'data' =>  " hi 我上线了 让咱们 hi 起来吧！",
 
         );
@@ -152,7 +153,9 @@ HTML;
                 'fd' => $client_id,
                 'from' => 0,
                 'channal' => 0,
-                'data' => $userInfo['user_name'] . "下线了",
+                'from_username' => $userInfo['user_name'],
+                'title' =>  'hello '.$userInfo['user_name'].'下线了',
+                'data' =>  " hi 我有事先离开会！ 稍等一会会，马上回来！！！",
             );
             unset( $this->users[$userInfo['user_id']] );
             $this->store->logout($client_id);

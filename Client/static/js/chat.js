@@ -68,8 +68,14 @@ function listenEvent() {
                 break;
 
             case 'newUser':
-                    $(document.body).append(showMsgHtml);
-                    $("#msg_title").text(message.from_username+' 上线了');
+            case 'offline':
+                 ws.send($.toJSON({cmd : 'getOnline'}));
+                 if($("#msg_win").length  >0){
+                      $("#msg_win").show();
+                 }else{
+                      $(document.body).append(showMsgHtml);
+                 }
+                    $("#msg_title").text(message.title);
                     $("#msg_content").text(message.data);
                     setTimeout(function() {
                         $("#msg_win").hide();
