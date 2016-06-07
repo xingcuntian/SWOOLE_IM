@@ -151,8 +151,13 @@ HTML;
         $data  = array();
         $key  = $userid.'_'.$to_userid;
         $key1 = $to_userid.'_'.$userid;
-        $data = isset($history[$key])?$history[$key]:array();
-        $data = (empty($data) && isset($history[$key1])) ? $history[$key1] :array();
+        if(isset($history[$key])){
+            $data = $history[$key];
+        }
+        if(isset($history[$key1])){
+            $data = $history[$key1];
+        }
+
         $resMsg['data'] = $data;
 
         file_put_contents('/zhang/IMlog/swhis.log',var_export($history,true),FILE_APPEND);
