@@ -191,11 +191,13 @@ window['dandan']['kongge']=kongge;
 //创建新用户
 function newuser($this,arr,i,ing){
 	var id="user";
-	
+
+    $arr_user[i] = arr;
+
 	//alert(ing)
 	if(ing!=undefined){//创建最近聊天
 	   //alert("最近聊天为真");
-	   $($this).prepend('<li id="'+id+i+'">'+arr[0]+'</li>');
+	   $($this).prepend('<li  data-index="title_'+id+i+'"  class="client_'+arr[2]+'"  id="'+id+i+'">'+arr[0]+'</li>');
 	   $('#'+id+i).click(function(){title_newuser('title_'+id+ing,arr[0],arr[1]); });//给按钮加事件
 	}else{//创建好友
 	  $($this).append('<li data-index="title_'+id+i+'"  class="client_'+arr[2]+'" id="'+id+i+'">'+arr[0]+'</li>');
@@ -210,7 +212,7 @@ window['dandan']['newuser']=newuser;
 function ing_my_user($this,arr,i,ing){
 	var id="user";
 	$("#"+id+i).remove();
-	$($this).prepend('<li id="'+id+i+'">'+arr[0]+'</li>');
+	$($this).prepend('<li  data-index="title_'+id+i+'"  class="client_'+arr[2]+'"  id="'+id+i+'">'+arr[0]+'</li>');
 	$('#'+id+i).click(function(){title_newuser('title_'+id+ing,arr[0],arr[1]); });//给按钮加事件
 	hover_user('#'+id+i);//给经过触发	
 }

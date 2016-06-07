@@ -83,8 +83,8 @@ function listenEvent() {
                 break;
 
             case 'fromMsg':
-                ws.send($.toJSON({cmd : 'getOnline'}));
-                findUserMsg(message);
+                //ws.send($.toJSON({cmd : 'getOnline'}));
+                findUserMsg(message,ws);
                 break;
 
             case 'getOnline':
@@ -224,11 +224,18 @@ function showOnlineList(dataObj) {
 /*
 * 遍历用户列表，找出 clientID，使其自动执行click事件
 * */
-function findUserMsg(dataObj)
+function findUserMsg(dataObj,ws)
 {
    var id = $(".client_"+dataObj.fromuserid).attr('id');
+    if(id.length <=0){
+         ws.send($.toJSON({cmd : 'getOnline'}));
+      }
    var ing_user =  $("#"+id).attr("data-index");
-   $("#"+id).click();
+    if($("#user_con"+ing_user).length <= 0){
+         $("#"+id).click();
+    }
+   //$("#"+id).click();
+
    var t= new Date().toLocaleTimeString();//当前时间
    $("#user_con"+ing_user).append('<div class="my_say_con"><font color=\"#0000FF\">'+dataObj.from_username+t+"</font><p><font color=\"#333333\">"+dataObj.data+'</font></p></div>');
    $("#right_mid").html(dataObj.data);//右边显示刚发送的文字
