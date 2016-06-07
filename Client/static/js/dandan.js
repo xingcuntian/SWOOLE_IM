@@ -274,7 +274,7 @@ function sibli_hide($this){
 //创建内容框
 function my_user_con(user,id){
 	if($("#user_con"+id).length<1){
-	   $(".con_box").append('<div id="user_con'+id+'"><font color="#CCCCCC">请在下面文本框里输入你想要聊天的内容，与用户【'+user+'】聊天</font></div>');
+	   $(".con_box").append('<div id="user_con'+id+'"><font color="#CCCCCC">请在下面文本框里输入你想要聊天的内容，与用户【'+user+'】聊天 【<a href="javascript:showHistory(\''+id+'\')">点击查看消息记录</a>】</font></div>');
 	   $("#user_con"+id).hide();//默认隐藏，增加效果
 	}
 	sibli_hide("#user_con"+id);//隐藏兄弟
@@ -369,6 +369,17 @@ for(i=0;i<$arr_user.length;i++){
 	
 }
 
-
-
 })
+
+//获取历史记录
+function showHistory(id){
+  var msg = {};
+  id = id.replace("title_", "");
+  var user  = $("#"+id).attr("class");
+  var touser_id = user.replace("client_", "");
+      msg.cmd = 'getHistory';
+      msg.to = touser_id;
+      msg.user_id = user_id;
+      msg.limit = 10;
+      ws.send($.toJSON(msg));
+}
