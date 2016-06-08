@@ -185,6 +185,9 @@ HTML;
         $message = json_decode($message,true);
         $resMsg['data'] = $message;
         $this->sendJson($client_id, $resMsg);
+
+        $this->redis->hdel(self::IM_NO_READ_MESSAGE,$message_key);
+
     }
 
 
@@ -333,7 +336,7 @@ HTML;
                }else{
                    $message = array();
                }
-               $log = array_merge($log,$message);
+               $log = array_merge($message,$log);
                $this->redis->hset(self::IM_NO_READ_MESSAGE,$message_key,json_encode($log));
             }
     }
