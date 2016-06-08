@@ -247,8 +247,10 @@ HTML;
 //        elseif ($msg['channal'] == 1)
 //        {
 
-        $toUserInfo = $this->clientUser[$msg['to']];
+       // $toUserInfo = $this->clientUser[$msg['to']];
         $fromUserInfo = $this->users[$resMsg['fromuserid']];
+        $toUserInfo  = $this->users[$msg['to']];
+
 
         $touser_id  = $toUserInfo['user_id'];
         $resMsg['touser_id'] = $touser_id;

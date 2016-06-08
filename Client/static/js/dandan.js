@@ -192,22 +192,22 @@ window['dandan']['kongge']=kongge;
 function newuser($this,arr,i,ing){
 	var id="user";
 
-    $arr_user[i] = arr;
+    $arr_user[arr[2]] = arr;
 
 	//alert(ing)
 	if(ing!=undefined){//创建最近聊天
-        var ischid = $($this).find("#"+id+i+"");
+        var ischid = $($this).find("#"+id+arr[2]+"");
         if(ischid.length > 0){
                return true;
         }
 	   //alert("最近聊天为真");
-	   $($this).prepend('<li  data-index="title_'+id+i+'"  class="client_'+arr[2]+'"  id="'+id+i+'">'+arr[0]+'</li>');
-	   $('#'+id+i).click(function(){title_newuser('title_'+id+ing,arr[0],arr[1]); });//给按钮加事件
+	   $($this).prepend('<li  data-index="title_'+id+arr[2]+'"  class="client_'+arr[2]+'"  id="'+id+arr[2]+'">'+arr[0]+'</li>');
+	   $('#'+id+i).click(function(){title_newuser('title_'+id+ing,arr[0],arr[2]); });//给按钮加事件
 	}else{//创建好友
-	  $($this).append('<li data-index="title_'+id+i+'"  class="client_'+arr[2]+'" id="'+id+i+'">'+arr[0]+'</li>');
-	  $('#'+id+i).click(function(){title_newuser('title_'+id+i,arr[0],arr[1]); });//给按钮加事件
+	  $($this).append('<li data-index="title_'+id+arr[2]+'"  class="client_'+arr[2]+'" id="'+id+arr[2]+'">'+arr[0]+'</li>');
+	  $('#'+id+i).click(function(){title_newuser('title_'+id+i,arr[0],arr[2]); });//给按钮加事件
 	}
-	hover_user('#'+id+i);//给经过触发	
+	hover_user('#'+id+arr[2]);//给经过触发
 	user_geshu();//更新人数
 }
 window['dandan']['newuser']=newuser;
@@ -222,15 +222,15 @@ function ing_my_user($this,arr,i,ing){
 }
 
 //创建标题栏和主控制（原是有一个主控制，忘了，就合在一起了，哈哈）
-function title_newuser(id,user,clientid){
+function title_newuser(id,user,to_user_id){
 	  if($("#"+id).length<1){
 	  $("#mid_top").append('<div id="'+id+'" class="list"><table border="0" cellspacing="0" cellpadding="0"><tr><td id="zi'+id+'" class="td_user td_user_click">'+user+'</td><td id="zino'+id+'" class="td_hide td_hide_click">X</td></tr></table></div>');
 
 	  //创建完成后给事件
 	  //alert('#'+id)
-	  $('#'+id).click(function(){title_newuser(id,user,clientid); });//给按钮加事件
+	  $('#'+id).click(function(){title_newuser(id,user,to_user_id); });//给按钮加事件
 	  //关闭
-	  $("#zino"+id).click(function(){delete_user(id,user,clientid); return false });//关闭打开的
+	  $("#zino"+id).click(function(){delete_user(id,user,to_user_id); return false });//关闭打开的
 	  
 	  
 	  }else{
@@ -243,12 +243,10 @@ function title_newuser(id,user,clientid){
 	  my_user_con(user,id);
 	  
 	  //创建头像
-	  my_user_head(user,id,clientid);
+	  my_user_head(user,id,to_user_id);
 	  
 	  ing_user=id;//当前用户
-      ing_clientid = clientid;
-
-	  //alert(ing_user);
+      to_user_id = to_user_id;
 	  
 	  $("#right_mid").html("");//清空右边的内容
 }
@@ -334,7 +332,7 @@ function delete_user(id,user,img){
 
       //websocket start
               msg.cmd = 'message';
-              msg.to = ing_clientid;
+              msg.to = to_user_id;
               msg.fromuserid = user_id;
               msg.data= content;
               ws.send($.toJSON(msg));
