@@ -64,7 +64,8 @@ function listenEvent() {
                 //ws.send($.toJSON({cmd : 'getHistory'}));
                 break;
             case 'login':
-                actionlogin(message);
+                alert(message.data);
+                actionlogin();
                 break;
 
             case 'newUser': //新用户上线
@@ -161,7 +162,8 @@ function listenEvent() {
     ws.onclose = function (e) {
         if (confirm("聊天服务器已关闭")) {
             //alert('您已退出聊天室');
-            location.href = '/user/login';
+            actionlogin();
+            //location.href = '/user/login';
         }
     };
 
@@ -170,6 +172,7 @@ function listenEvent() {
      */
     ws.onerror = function (e) {
         alert("异常:" + e.data);
+        actionlogin();
         console.log("onerror");
     };
 }
@@ -192,10 +195,9 @@ function selectUser(userid) {
 /*
 * 重复登录，退出当前帐号 跳转到登录页
 * */
-function actionlogin(message)
+function actionlogin()
 {
     var rand = Math.random();
-    alert(message.data);
     $.ajax({
         'url': '/user/logout?t='+rand,
         "cache": false,
@@ -206,7 +208,7 @@ function actionlogin(message)
         jsonp:'callback',
         jsonpCallback:"success_jsonpCallback",
         'success': function (data) {
-            alert(data);
+            //alert(data);
         }
     });
     ws.close();
