@@ -68,8 +68,8 @@ function listenEvent() {
                 actionlogin();
                 break;
 
-            case 'newUser': //新用户上线
-            case 'offline': //用户下线
+             case 'newUser': //新用户上线
+             case 'offline': //用户下线
                  ws.send($.toJSON({cmd : 'getOnline'}));
                  if($("#msg_win").length  >0){
                       $("#msg_win").show();
@@ -83,13 +83,14 @@ function listenEvent() {
                      },4000);
                 break;
 
-            case 'fromMsg': //消息来临时
+             case 'fromMsg': //消息来临时
                 //ws.send($.toJSON({cmd : 'getOnline'}));
                 findUserMsg(message,ws);
                 break;
 
-            case 'gethistory': //消息记录
+             case 'gethistory': //消息记录
                     alert(message.data);
+                    showMsgHistory(message);
                 break;
 
             case 'getOnline':  //在线列表
@@ -246,6 +247,28 @@ function findUserMsg(dataObj,ws)
    $("#user_con"+ing_user).append('<div class="my_say_con"><font color=\"#0000FF\">'+dataObj.from_username+t+"</font><p><font color=\"#333333\">"+dataObj.data+'</font></p></div>');
    $("#right_mid").html(dataObj.data);//右边显示刚发送的文字
 }
+
+//显示消息记录
+function showMsgHistory(message)
+{
+    var data = message.data;
+    $.each(data,function(key,value) {
+        //alert(key);
+        //alert(value);
+
+        console.log("key:"+key+" ----value:"+value);
+    });
+
+    //for(i=0;i<data.length;i++){
+    //    dandan.newuser('.ul_2',dataObj[i],i);//创建用户
+    //}
+
+}
+
+
+
+
+
 
 
 
