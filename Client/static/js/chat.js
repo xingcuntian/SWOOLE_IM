@@ -90,7 +90,6 @@ function listenEvent() {
                 break;
 
              case 'gethistory': //消息记录
-                    alert(message.data);
                     showMsgHistory(message);
                 break;
 
@@ -99,63 +98,6 @@ function listenEvent() {
                 break;
 
         }
-
-
-
-        //if (cmd == 'login_success')
-        //{
-        //    alert(message.data);
-        //}
-        //if (cmd == 'login')
-        //{
-        //  alert(message.data);
-        //    $.ajax({
-        //        'url': '/user/logout?t='+rand,
-        //        "cache": false,
-        //        "method": "POST",
-        //         async:false,
-        //        //"dataType": "json",
-        //        "dataType": "jsonp",
-        //        jsonp:'callback',
-        //        jsonpCallback:"success_jsonpCallback",
-        //        'success': function (data) {
-        //            alert(data);
-        //        }
-        //    });
-        //  ws.close();
-        //  location.href = '/user/login?t='+rand;
-        //  client_id = $.evalJSON(e.data).fd;
-            //获取在线列表
-            //ws.send($.toJSON({cmd : 'getOnline'}));
-            //获取历史记录
-           // ws.send($.toJSON({cmd : 'getHistory'}));
-            //alert( "收到消息了:"+e.data );
-      //  }
-
-
-
-        //else if (cmd == 'getOnline')
-        //{
-        //    showOnlineList(message);
-        //}
-        //else if (cmd == 'getHistory')
-        //{
-        //    showHistory(message);
-        //}
-        //else if (cmd == 'newUser')
-        //{
-        //    showNewUser(message);
-        //}
-        //else if (cmd == 'fromMsg')
-        //{
-        //    showNewMsg(message);
-        //}
-        //else if (cmd == 'offline')
-        //{
-        //    var cid = message.fd;
-        //    delUser(cid);
-        //    showNewMsg(message);
-        //}
     };
 
     /**
