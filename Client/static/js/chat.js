@@ -185,7 +185,7 @@ function showOnlineList(dataObj) {
 function findUserMsg(dataObj,ws)
 {
    var id = $(".client_"+dataObj.fromuserid).attr('id');
-    if(id.length <=0){
+    if(typeof(id)=='undefined' || id.length <=0){
          ws.send($.toJSON({cmd : 'getOnline'}));
       }
    var ing_user =  $("#"+id).attr("data-index");
@@ -235,7 +235,7 @@ function getnoreadmessage(message)
     }
     $.each(data,function(key,value) {
         var id = $(".client_"+value.user_id).attr('id');
-        if(id.length <=0){
+        if(typeof(id)=='undefined' || id.length <=0){
             var arrlen = $arr_user.length+1;
             $arr_user[arrlen] = Array(value.user_name,'0',value.user_id);
             dandan.newuser('.ul_2',$arr_user[arrlen],arrlen);//创建用户
