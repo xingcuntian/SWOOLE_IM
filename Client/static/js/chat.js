@@ -60,8 +60,11 @@ function listenEvent() {
                 //获取在线人数
                 ws.send($.toJSON({cmd : 'getOnline'}));
 
-                //获取历史记录
-                //ws.send($.toJSON({cmd : 'getHistory'}));
+                //获取未读消息
+                var  msg = new Object();
+                msg.cmd = 'getNoReadMessage';
+                msg.user_id = user_id;
+                ws.send($.toJSON(msg));
                 break;
             case 'login':
                 alert(message.data);
@@ -95,6 +98,10 @@ function listenEvent() {
 
             case 'getOnline':  //在线列表
                 showOnlineList(message.list);
+                break;
+
+            case 'getnoreadmessage': //未读消息
+                 getnoreadmessage(message);
                 break;
 
         }
@@ -217,9 +224,35 @@ function showMsgHistory(message)
       });
 
 }
+/*
+* 未读消息
+* */
+function getnoreadmessage(message)
+{
+    var data = message.data;
+    if(data.length <1){
+         return true;
+    }
+    $.each(data,function(key,value) {
+        var id = $(".client_"+value.user_id).attr('id');
+        if(id.length <=0){
+            var arrlen = $arr_user.length+1;
+            $arr_user[arrlen] = Array(value.user_name,'0',value.user_id);
+            dandan.newuser('.ul_2',$arr_user[arrlen],arrlen);//创建用户
+        }
+        var id = $(".client_"+value.user_id).attr('id');
+        var ing_user =  $("#"+id).attr("data-index");
+        if($("#user_con"+ing_user).length <= 0){
+            $("#"+id).click();
+        }
+        var timestamp3 = value.time;
+        var newDate  = new Date();
+        newDate.setTime(timestamp3 *1000);
+        var t = newDate.toLocaleTimeString();
+        $("#user_con"+ing_user).append('<div class="my_say_con"><font color=\"#0000FF\">'+value.user_name+t+"</font><p><font color=\"#333333\">"+value.data+'</font></p></div>');
+     });
 
-
-
+}
 
 
 

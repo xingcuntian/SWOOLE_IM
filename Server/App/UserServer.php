@@ -166,6 +166,26 @@ HTML;
 
      }
 
+    /*
+     * 获取未读消息
+     * */
+    function cmd_getNoReadMessage($client_id, $msg)
+    {
+        $resMsg = array(
+            'cmd' => 'getnoreadmessage',
+            'data' => ''
+        );
+        $user_id = $msg['user_id'];
+        $message_key = 'cmd_'.$user_id;
+        $message = $this->redis->hget(self::IM_NO_READ_MESSAGE,$message_key);
+        if(empty($message)){
+            $this->sendJson($client_id, $resMsg);
+            return true;
+        }
+        $message = json_decode($message,true);
+        $resMsg['data'] = $message;
+        $this->sendJson($client_id, $resMsg);
+    }
 
 
     /**
