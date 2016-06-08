@@ -14,7 +14,8 @@ class UserServer extends Swoole\Protocol\WebSocket
     protected  $clientUser;
     const  MESSAGE_MAX_LEN     = 1024; //单条消息不得超过1K
     const  TOKEN = 'SWOOLE_IM';
-    const  ONLINE_CONNECTION = 'hash_online_connect';
+    const  ONLINE_CONNECTION  = 'im_hash_online_connect';    //登录记录用户连接信息表
+    const  IM_NO_READ_MESSAGE = 'im_no_read_message_table'; //未读消息表
 
 
     function __construct($config = array())
@@ -235,6 +236,7 @@ HTML;
         $resMsg['from_clientid'] =  $fromUserInfo['fd'];
         $resMsg['from_username'] =  $fromUserInfo['user_name'];
         $resMsg['from_userid']   =  $fromUserInfo['user_id'];
+        $resMsg['add_message'] = '1';
         $this->sendJson($msg['to'], $resMsg);
         file_put_contents('/zhang/IMlog/sw.log',var_export($resMsg,true),FILE_APPEND);
         $this->store->addHistory($resMsg['from_userid'], $msg['data'],$touser_id);
@@ -294,7 +296,24 @@ HTML;
         if ($this->send($client_id, $msg) === false)
         {
             $this->close($client_id);
-        }
+
+            if(!isset($array['add_message']) || $array['add_message'] != '1'){
+                 return true;
+            }
+               $client_user = $this->clientUser[$client_id];
+               $user_id     = $array['from_userid'];
+               $message_key = 'cmd_'.$client_user['user_id'];
+               $log = array('user_id' => $user_id,'user_name'=>$array['user_name'],'data' => $array['data'],'time' => time());
+               $message = $this->redis->hget(IM_NO_READ_MESSAGE,$message_key);
+               if(!empty($message))
+               {
+                   $message = json_decode($message,true);
+               }else{
+                   $message = array();
+               }
+               $log = array_merge($log,$message);
+               $this->redis->hset(IM_NO_READ_MESSAGE,$message_key,json_encode($log));
+            }
     }
 
 
