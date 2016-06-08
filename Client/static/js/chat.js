@@ -252,16 +252,28 @@ function findUserMsg(dataObj,ws)
 function showMsgHistory(message)
 {
     var data = message.data;
+    var i =0;
     $.each(data,function(key,value) {
-        //alert(key);
-        //alert(value);
-
         console.log("key:"+key+" ----value:"+value);
-    });
 
-    //for(i=0;i<data.length;i++){
-    //    dandan.newuser('.ul_2',dataObj[i],i);//创建用户
-    //}
+        var from_user_id = value.user_id;
+        if(from_user_id == user_id){
+               from_user_id = value.touserid;
+           }
+        var ing_user = $(".client_"+from_user_id).attr('data-index');
+        if(i==0)
+        {
+           $("#user_con"+ing_user).html('');
+           i++;
+        }
+        //var t= new Date().toLocaleTimeString();//当前时间
+
+        var timestamp3 = value.time;
+        var newDate  = new Date();
+        newDate.setTime(timestamp3 *1000);
+        var t = newDate.toLocaleTimeString();
+        $("#user_con"+ing_user).append('<div class="my_say_con"><font color=\"#0000FF\">'+value.user_name+t+"</font><p><font color=\"#333333\">"+value.msg+'</font></p></div>');
+      });
 
 }
 
