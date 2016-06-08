@@ -6,7 +6,8 @@ email:admin@seejoke.com
 */						
    window['dandan']={}
    var ing_user;//当前用户
-    var ing_clientid ; //发送的连接ID
+   var ing_clientid ; //发送的连接ID
+   var to_user_id;
    //浏览器
    function liulanqi(){
 	  var h=$(window).height();
@@ -202,10 +203,10 @@ function newuser($this,arr,i,ing){
         }
 	   //alert("最近聊天为真");
 	   $($this).prepend('<li  data-index="title_'+id+arr[2]+'"  class="client_'+arr[2]+'"  id="'+id+arr[2]+'">'+arr[0]+'</li>');
-	   $('#'+id+i).click(function(){title_newuser('title_'+id+ing,arr[0],arr[2]); });//给按钮加事件
+	   $('#'+id+arr[2]).click(function(){title_newuser('title_'+id+ing,arr[0],arr[2]); });//给按钮加事件
 	}else{//创建好友
 	  $($this).append('<li data-index="title_'+id+arr[2]+'"  class="client_'+arr[2]+'" id="'+id+arr[2]+'">'+arr[0]+'</li>');
-	  $('#'+id+i).click(function(){title_newuser('title_'+id+i,arr[0],arr[2]); });//给按钮加事件
+	  $('#'+id+arr[2]).click(function(){title_newuser('title_'+id+arr[2],arr[0],arr[2]); });//给按钮加事件
 	}
 	hover_user('#'+id+arr[2]);//给经过触发
 	user_geshu();//更新人数
@@ -215,9 +216,9 @@ window['dandan']['newuser']=newuser;
 ////更新最近聊天的位置
 function ing_my_user($this,arr,i,ing){
 	var id="user";
-	$("#"+id+i).remove();
-	$($this).prepend('<li  data-index="title_'+id+i+'"  class="client_'+arr[2]+'"  id="'+id+i+'">'+arr[0]+'</li>');
-	$('#'+id+i).click(function(){title_newuser('title_'+id+ing,arr[0],arr[1]); });//给按钮加事件
+	$("#"+id+arr[2]).remove();
+	$($this).prepend('<li  data-index="title_'+id+arr[2]+'"  class="client_'+arr[2]+'"  id="'+id+arr[2]+'">'+arr[0]+'</li>');
+	$('#'+id+arr[2]).click(function(){title_newuser('title_'+id+ing,arr[0],arr[2]); });//给按钮加事件
 	hover_user('#'+id+i);//给经过触发	
 }
 
