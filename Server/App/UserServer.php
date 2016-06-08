@@ -205,7 +205,7 @@ HTML;
                 'title' =>  'hello '.$userInfo['user_name'].'下线了',
                 'data' =>  " hi 我有事先离开会！ 稍等一会会，马上回来！！！",
             );
-            unset( $this->users[$userInfo['user_id']],$this->clientUser[$client_id] );
+          //  unset( $this->users[$userInfo['user_id']],$this->clientUser[$client_id] );
             $this->store->logout($userInfo['user_id']);
 
             //清 redis
@@ -259,7 +259,7 @@ HTML;
         $resMsg['from_username'] =  $fromUserInfo['user_name'];
         $resMsg['from_userid']   =  $fromUserInfo['user_id'];
         $resMsg['add_message'] = '1';
-        $this->sendJson($msg['to'], $resMsg);
+        $this->sendJson($toUserInfo['fd'], $resMsg);
         file_put_contents('/zhang/IMlog/sw.log',var_export($resMsg,true),FILE_APPEND);
         $this->store->addHistory($resMsg['from_userid'], $msg['data'],$touser_id);
       //  }

@@ -223,7 +223,7 @@ function ing_my_user($this,arr,i,ing){
 }
 
 //创建标题栏和主控制（原是有一个主控制，忘了，就合在一起了，哈哈）
-function title_newuser(id,user,to_user_id){
+function title_newuser(id,user,fto_user_id){
 	  if($("#"+id).length<1){
 	  $("#mid_top").append('<div id="'+id+'" class="list"><table border="0" cellspacing="0" cellpadding="0"><tr><td id="zi'+id+'" class="td_user td_user_click">'+user+'</td><td id="zino'+id+'" class="td_hide td_hide_click">X</td></tr></table></div>');
 
@@ -247,7 +247,7 @@ function title_newuser(id,user,to_user_id){
 	  my_user_head(user,id,to_user_id);
 	  
 	  ing_user=id;//当前用户
-      to_user_id = to_user_id;
+      to_user_id = fto_user_id;
 	  
 	  $("#right_mid").html("");//清空右边的内容
 }

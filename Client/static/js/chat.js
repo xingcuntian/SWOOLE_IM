@@ -184,11 +184,14 @@ function showOnlineList(dataObj) {
 * */
 function findUserMsg(dataObj,ws)
 {
-   var id = $(".client_"+dataObj.fromuserid).attr('id');
-    if(typeof(id)=='undefined' || id.length <=0){
-         ws.send($.toJSON({cmd : 'getOnline'}));
-      }
-   var ing_user =  $("#"+id).attr("data-index");
+   //var id = $(".client_"+dataObj.fromuserid).attr('id');
+   // if(typeof(id)=='undefined' || id.length <=0){
+   //      ws.send($.toJSON({cmd : 'getOnline'}));
+   //   }
+   //var ing_user =  $("#user"+dataObj.fromuserid).attr("data-index");
+
+   var ing_user = 'title_user'+dataObj.fromuserid;
+   var id = 'user'+dataObj.fromuserid;
     if($("#user_con"+ing_user).length <= 0){
          $("#"+id).click();
     }
@@ -210,7 +213,9 @@ function showMsgHistory(message)
         if(from_user_id == user_id){
                from_user_id = value.touserid;
            }
-        var ing_user = $(".client_"+from_user_id).attr('data-index');
+        //var ing_user = $(".client_"+from_user_id).attr('data-index');
+
+        var ing_user =  'title_user'+from_user_id;
         if(i==0)
         {
             $("#user_con"+ing_user+">div").remove(".my_say_con");
@@ -234,13 +239,13 @@ function getnoreadmessage(message)
          return true;
     }
     $.each(data,function(key,value) {
-        var id = $(".client_"+value.user_id).attr('id');
+        var id = $("#user"+value.user_id);
         if(typeof(id)=='undefined' || id.length <=0){
             var arrlen = $arr_user.length+1;
             $arr_user[arrlen] = Array(value.user_name,'0',value.user_id);
             dandan.newuser('.ul_2',$arr_user[arrlen],arrlen);//创建用户
         }
-        var id = $(".client_"+value.user_id).attr('id');
+        var id =  "#user"+value.user_id;
         var ing_user =  $("#"+id).attr("data-index");
         if($("#user_con"+ing_user).length <= 0){
             $("#"+id).click();
