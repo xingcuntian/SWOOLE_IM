@@ -88,9 +88,20 @@ class File
         {
             while (($line = fgets($handle, 4096)) !== false)
             {
-                $log = json_decode($line);
+                $log = json_decode($line,true);
                 if (!$log) continue;
-                $this->history[] = $log;
+                if(!isset($log['user_id']) || !isset($log['touserid'])){
+                    continue;
+                }
+                $key  = $log['user_id'].'_'.$log['touserid'];
+                $key1 = $log['touserid'].'_'.$log['user_id'];
+                if(!isset($this->history[$key])){
+                     $key = $key1;
+                }
+                $this->history[$key][] = $log;
+
+                //$this->history[] = $log;
+
                 if (count($this->history) > $this->history_max_size)
                 {
                     array_shift($this->history);

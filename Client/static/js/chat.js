@@ -65,6 +65,7 @@ function listenEvent() {
                 break;
             case 'login':
                 alert(message.data);
+                ws.close();
                 actionlogin();
                 break;
 
@@ -163,6 +164,7 @@ function listenEvent() {
     ws.onclose = function (e) {
         if (confirm("聊天服务器已关闭")) {
             //alert('您已退出聊天室');
+            ws.close();
             actionlogin();
             //location.href = '/user/login';
         }
@@ -173,6 +175,7 @@ function listenEvent() {
      */
     ws.onerror = function (e) {
         alert("异常:" + e.data);
+        ws.close();
         actionlogin();
         console.log("onerror");
     };
@@ -212,7 +215,6 @@ function actionlogin()
             //alert(data);
         }
     });
-    ws.close();
     location.href = '/user/login?t='+rand;
 }
 
@@ -254,8 +256,7 @@ function showMsgHistory(message)
     var data = message.data;
     var i =0;
     $.each(data,function(key,value) {
-        console.log("key:"+key+" ----value:"+value);
-
+        //console.log("key:"+key+" ----value:"+value);
         var from_user_id = value.user_id;
         if(from_user_id == user_id){
                from_user_id = value.touserid;
@@ -263,11 +264,9 @@ function showMsgHistory(message)
         var ing_user = $(".client_"+from_user_id).attr('data-index');
         if(i==0)
         {
-           $("#user_con"+ing_user).html('');
-           i++;
+            $("#user_con"+ing_user+">div").remove(".my_say_con");
+            i++;
         }
-        //var t= new Date().toLocaleTimeString();//当前时间
-
         var timestamp3 = value.time;
         var newDate  = new Date();
         newDate.setTime(timestamp3 *1000);

@@ -107,8 +107,7 @@ HTML;
             'fromuserid' => $resMsg['user_id'],
             'from_username' => $resMsg['user_name'],
             'title' =>  'hello '.$resMsg['user_name'].'上线了',
-            'data' =>  " hi 我上线了 让咱们 hi 起来吧！",
-
+            'data' =>  " hi 我上线了 让咱们 hi 起来吧！"
         );
         file_put_contents('/zhang/IMlog/sw.log',var_export($loginMsg,true),FILE_APPEND);
         $this->broadcastJson($client_id, $loginMsg);
@@ -185,8 +184,13 @@ HTML;
                 'title' =>  'hello '.$userInfo['user_name'].'下线了',
                 'data' =>  " hi 我有事先离开会！ 稍等一会会，马上回来！！！",
             );
-            unset( $this->users[$userInfo['user_id']] );
+            unset( $this->users[$userInfo['user_id']],$this->clientUser[$client_id] );
             $this->store->logout($userInfo['user_id']);
+
+            //清 redis
+            $userKey = 'cmd_'.$userInfo['user_id'];
+            $this->redis->hdel(self::ONLINE_CONNECTION, $userKey);
+
             //将下线消息发送给所有人
             $this->broadcastJson($client_id, $resMsg);
         }
