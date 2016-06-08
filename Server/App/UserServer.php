@@ -325,7 +325,7 @@ HTML;
                $client_user = $this->clientUser[$client_id];
                $user_id     = $array['from_userid'];
                $message_key = 'cmd_'.$client_user['user_id'];
-               $log = array('user_id' => $user_id,'user_name'=>$array['from_username'],'data' => $array['data'],'time' => time());
+               $log[0] = array('user_id' => $user_id,'user_name'=>$array['from_username'],'data' => $array['data'],'time' => time());
                $message = $this->redis->hget(self::IM_NO_READ_MESSAGE,$message_key);
                if(!empty($message))
                {

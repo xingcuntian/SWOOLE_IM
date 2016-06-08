@@ -245,7 +245,7 @@ function getnoreadmessage(message)
             $arr_user[arrlen] = Array(value.user_name,'0',value.user_id);
             dandan.newuser('.ul_2',$arr_user[arrlen],arrlen);//创建用户
         }
-        var id =  "#user"+value.user_id;
+        var id =  "user"+value.user_id;
         var ing_user =  $("#"+id).attr("data-index");
         if($("#user_con"+ing_user).length <= 0){
             $("#"+id).click();
