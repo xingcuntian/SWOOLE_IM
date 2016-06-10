@@ -364,6 +364,7 @@ function delete_user(id,user,img){
 
      $("#zi"+ing_user).removeClass("td_user_msg");
      $("#zino"+ing_user).removeClass("td_user_msg");
+     document.title = 'PHP WEB IM 在线聊天';
 
      //群聊
 	 if(typeof(to_user_id) == "undefined"  || to_user_id =='all'){

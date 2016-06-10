@@ -206,6 +206,8 @@ function findUserMsg(dataObj,ws)
    $("#right_mid").html(dataObj.data);//右边显示刚发送的文字
    $("#zititle_user"+dataObj.fromuserid).addClass("td_user_msg");
    $("#zinotitle_user"+dataObj.fromuserid).addClass("td_user_msg");
+
+    document.title = dataObj.data;
 }
 
 
@@ -232,6 +234,8 @@ function showQlUserMsg(dataObj)
     }
     $("#msg_all").append('<div class="my_say_con"><font color=\"#0000FF\">'+dataObj.from_username+t+"</font><p><font color=\"#333333\">"+dataObj.data+'</font></p></div>');
 
+
+    document.title = dataObj.data;
 }
 
 
