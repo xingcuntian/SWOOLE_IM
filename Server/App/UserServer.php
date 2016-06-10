@@ -223,7 +223,7 @@ HTML;
 
 
     /**
-     * 发送信息请求
+     * 发送信息请求 好友单聊
      */
     function cmd_message($client_id, $msg)
     {
@@ -236,24 +236,8 @@ HTML;
             return;
         }
 
-        //表示群发
-//        if ($msg['channal'] == 0)
-//        {
-//            $this->broadcastJson($client_id, $resMsg);
-//            $this->getSwooleServer()->task(serialize(array(
-//                'cmd' => 'addHistory',
-//                'msg' => $msg,
-//                'fd'  => $client_id,
-//            )), self::WORKER_HISTORY_ID);
-//        }
-//        //表示私聊
-//        elseif ($msg['channal'] == 1)
-//        {
-
-       // $toUserInfo = $this->clientUser[$msg['to']];
         $fromUserInfo = $this->users[$resMsg['fromuserid']];
         $toUserInfo  = $this->users[$msg['to']];
-
 
         $touser_id  = $toUserInfo['user_id'];
         $resMsg['touser_id'] = $touser_id;
@@ -265,8 +249,41 @@ HTML;
         $this->sendJson($toUserInfo['fd'], $resMsg);
         file_put_contents('/zhang/IMlog/sw.log',var_export($resMsg,true),FILE_APPEND);
         $this->store->addHistory($resMsg['from_userid'], $msg['data'],$touser_id);
-      //  }
     }
+
+
+    /**
+     * 发送信息请求 群聊
+     */
+    function cmd_qmessage($client_id, $msg)
+    {
+        $resMsg = $msg;
+        $resMsg['cmd'] = 'qfromMsg';
+
+        if (strlen($msg['data']) > self::MESSAGE_MAX_LEN)
+        {
+            $this->sendErrorMessage($client_id, 102, 'message max length is '.self::MESSAGE_MAX_LEN);
+            return;
+        }
+        $touser_id  = 'all';
+        $fromUserInfo = $this->users[$resMsg['fromuserid']];
+        $resMsg['from_username'] =  $fromUserInfo['user_name'];
+        $resMsg['from_userid']   =  $fromUserInfo['user_id'];
+        $resMsg['add_message'] = '1';
+        $resMsg['time'] = time();
+
+        $this->broadcastJson($client_id, $resMsg);
+
+        file_put_contents('/zhang/IMlog/sw.log',var_export($resMsg,true),FILE_APPEND);
+        $this->store->addHistory($resMsg['from_userid'], $msg['data'],$touser_id);
+
+    }
+
+
+
+
+
+
 
 
     /**

@@ -104,6 +104,10 @@ function listenEvent() {
                  getnoreadmessage(message);
                 break;
 
+            case 'qfromMsg': 
+                   showQlUserMsg(message);
+                break;
+
         }
     };
 
@@ -184,23 +188,34 @@ function showOnlineList(dataObj) {
 * */
 function findUserMsg(dataObj,ws)
 {
-   //var id = $(".client_"+dataObj.fromuserid).attr('id');
-   // if(typeof(id)=='undefined' || id.length <=0){
-   //      ws.send($.toJSON({cmd : 'getOnline'}));
-   //   }
-   //var ing_user =  $("#user"+dataObj.fromuserid).attr("data-index");
-
    var ing_user = 'title_user'+dataObj.fromuserid;
    var id = 'user'+dataObj.fromuserid;
     if($("#user_con"+ing_user).length <= 0){
          $("#"+id).click();
     }
-   //$("#"+id).click();
-
    var t= new Date().toLocaleTimeString();//当前时间
    $("#user_con"+ing_user).append('<div class="my_say_con"><font color=\"#0000FF\">'+dataObj.from_username+t+"</font><p><font color=\"#333333\">"+dataObj.data+'</font></p></div>');
    $("#right_mid").html(dataObj.data);//右边显示刚发送的文字
 }
+
+
+
+/*
+* 显示群聊消息
+* */
+function showQlUserMsg(dataObj)
+{
+    var timestamp3 = dataObj.time;
+    var newDate  = new Date();
+    newDate.setTime(timestamp3 *1000);
+    var t = newDate.toLocaleTimeString();
+    $("#msg_all").append('<div class="my_say_con"><font color=\"#0000FF\">'+dataObj.from_username+t+"</font><p><font color=\"#333333\">"+dataObj.data+'</font></p></div>');
+
+}
+
+
+
+
 
 //显示消息记录
 function showMsgHistory(message)

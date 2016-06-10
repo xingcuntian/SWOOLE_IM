@@ -315,22 +315,30 @@ function delete_user(id,user,img){
 
 //发送后调用此方法
  function saysay(){
-	 
-	 if($(".list").length<1){
-         var a='zxr';
-         var t=new Date().toLocaleTimeString();//当前时间
-         var c ='aaaaaaaaaaaaaaaaa';
-         $("#msg_show").append('<div class="my_say_con"><font color=\"#0000FF\">'+a+t+"</font><p><font color=\"#333333\">"+c+'</font></p></div>');
+     var content = $("#texterea").val();
+          content = content.replace(" ", "&nbsp;");
+     var msg = {};
+     var t = new Date().toLocaleTimeString();//当前时间
 
-         //alert("你还没选中跟哪个聊天，请点左边好友选中一个再聊");
-		   return false;
+     if(content.length ==0 ){
+          alert("你输入的内容为空")
+          return false;
+     }
+
+    //群聊
+	 if($(".list").length<1){
+         msg.cmd = 'qmessage';
+         msg.to = 'all';
+         msg.fromuserid = user_id;
+         msg.data= content;
+         msg.type=1;
+         ws.send($.toJSON(msg));
+         $("#msg_all").append('<div class="my_say_con"><font color=\"#0000FF\">'+user_name+t+"</font><p><font color=\"#333333\">"+content+'</font></p></div>');
+         $("#texterea").val("");
+         return false;
 		 }
 
-      var msg = {};
-	  var t=new Date().toLocaleTimeString();//当前时间
-	  if($("#texterea").val()){
-          var content = $("#texterea").val();
-              content = content.replace(" ", "&nbsp;");
+      //单聊
 	  $("#user_con"+ing_user).append('<div class="my_say_con"><font color=\"#0000FF\">'+$admin_name+t+"</font><p><font color=\"#333333\">"+trim2(trim($("#texterea").val()))+'</font></p></div>');
 	  $("#right_mid").html($("#texterea").val());//右边显示刚发送的文字
 	  $("#texterea").val("");
@@ -341,22 +349,18 @@ function delete_user(id,user,img){
               msg.to = to_user_id;
               msg.fromuserid = user_id;
               msg.data= content;
+              msg.type=0;
               ws.send($.toJSON(msg));
          // websocket end
 
-	  //alert($(".con_box").height());
-	  //alert($("#user_con"+ing_user+" > .my_say_con").length);//聊天记录的个数
-	  //alert(ing_user)
 	   var ing_id=ing_user.substring(10,ing_user.length);
-	   //alert(ing_id);
+
 	   if($("#usering"+ing_id).length<1){//创建最近聊天人
 	       dandan.newuser('.ul_1',$arr_user[ing_id],ing_id,ing_id);//创建最近聊天
 	   }else{
 		   ing_my_user('.ul_1',$arr_user[ing_id],ing_id,ing_id);//更新最近聊天的位置
 	   }
-      }else{
-		alert("你输入的内容为空")  
-	  }
+
 	  $("#texterea").focus();//光标焦点
 	}  
 
