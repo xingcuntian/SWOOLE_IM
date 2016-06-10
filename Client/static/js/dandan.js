@@ -303,7 +303,7 @@ function delete_user(id,user,img){
 			 
 		 }else{
 		     //alert("已经全部删除");
-			 $(".dandan_liaotian").show(500)
+			 $("#msg_all").show(500)
 		 };
 		
 	    }
@@ -317,7 +317,12 @@ function delete_user(id,user,img){
  function saysay(){
 	 
 	 if($(".list").length<1){
-		   alert("你还没选中跟哪个聊天，请点左边好友选中一个再聊");
+         var a='zxr';
+         var t=new Date().toLocaleTimeString();//当前时间
+         var c ='aaaaaaaaaaaaaaaaa';
+         $("#msg_show").append('<div class="my_say_con"><font color=\"#0000FF\">'+a+t+"</font><p><font color=\"#333333\">"+c+'</font></p></div>');
+
+         //alert("你还没选中跟哪个聊天，请点左边好友选中一个再聊");
 		   return false;
 		 }
 

@@ -74,7 +74,11 @@ $admin_name = user_name;
   <div id="mid">
     <div id="mid_con">
       <div class="my_show">
-        <div class="con_box"><div class="dandan_liaotian"><img src="/static/user_img/dandan.jpg" alt="蛋蛋聊天界面" /></div></div>
+        <div class="con_box">
+            <div id="msg_all">
+                 <font color="#CCCCCC">请在下面文本框里输入你想要聊天的内容，与所有用户聊天。 也可点击左边好友聊天</font>
+            </div>
+        </div>
       </div>
     </div>
     <div id="mid_mid"></div>
