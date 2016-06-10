@@ -28,6 +28,11 @@ $admin_name = user_name;
 //    Array('张三'),
 //    Array('李四'),
 //    Array('王五'))
+
+window.onbeforeunload = function () {
+  return '你确定要离开吗?';
+};
+
 </script>
 <link href="/static/images/dandan.css" rel="stylesheet" media="screen" type="text/css" />
 <link href="/static/css/Propup.css" rel="stylesheet" media="screen" type="text/css" />
