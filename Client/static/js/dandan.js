@@ -248,6 +248,17 @@ function title_newuser(id,user,fto_user_id){
 	  
 	  ing_user=id;//当前用户
       to_user_id = fto_user_id;
+
+    //群聊
+    var groupChatLen = $("#msg_all>div").length;
+    if(groupChatLen >=1){
+        var groupid = 'title_userall';
+        var groupuser = '我的好友们';
+        $("#mid_top").append('<div id="'+id+'" class="list"><table border="0" cellspacing="0" cellpadding="0"><tr><td id="zi'+id+'" class="td_user td_user_click">'+groupuser+'</td><td id="zino'+id+'" class="td_hide td_hide_click">X</td></tr></table></div>');
+        my_user_con(groupuser,groupid);
+    }
+
+    //群聊 end
 	  
 	  $("#right_mid").html("");//清空右边的内容
 }
