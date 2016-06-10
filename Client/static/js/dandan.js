@@ -256,9 +256,9 @@ function title_newuser(id,user,fto_user_id){
         var groupuser = '我的好友们';
         if($("#title_userall").length ==0 ){
           $("#mid_top").append('<div id="'+groupid+'" class="list"><table border="0" cellspacing="0" cellpadding="0"><tr><td id="zi'+groupid+'" class="td_user td_user_click">'+groupuser+'</td><td id="zino'+groupid+'" class="td_hide td_hide_click">X</td></tr></table></div>');
-             $('#'+groupid).click(function(){title_newuser(groupid,user,'all'); });//给按钮加事件
+             $('#'+groupid).click(function(){title_newuser(groupid,groupuser,'all'); });//给按钮加事件
             //关闭
-             $("#zino"+groupid).click(function(){delete_user(groupid,user,'all'); return false });//关闭打开的
+             $("#zino"+groupid).click(function(){delete_user(groupid,groupuser,'all'); return false });//关闭打开的
               my_user_con(groupuser,groupid);
         }
     }
@@ -350,6 +350,10 @@ function delete_user(id,user,img){
          msg.type=1;
          ws.send($.toJSON(msg));
          $("#msg_all").append('<div class="my_say_con"><font color=\"#0000FF\">'+user_name+t+"</font><p><font color=\"#333333\">"+content+'</font></p></div>');
+         if($("#user_contitle_userall").length > 0)
+         {
+             $("#user_contitle_userall").append('<div class="my_say_con"><font color=\"#0000FF\">'+user_name+t+"</font><p><font color=\"#333333\">"+content+'</font></p></div>');
+         }
          $("#texterea").val("");
          return false;
 		 }
