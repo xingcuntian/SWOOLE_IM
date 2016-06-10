@@ -61,6 +61,14 @@ function listenEvent() {
                 //获取在线人数
                 ws.send($.toJSON({cmd : 'getOnline'}));
 
+               //群聊消息
+                var msg = {};
+                msg.cmd = 'getHistory';
+                msg.touser_id = 'all';
+                msg.user_id = user_id;
+                msg.page = 1;
+                ws.send($.toJSON(msg));
+
                 //获取未读消息
                 var  msg = new Object();
                 msg.cmd = 'getNoReadMessage';
@@ -261,22 +269,30 @@ function showMsgHistory(message)
     var i =0;
     $.each(data,function(key,value) {
         //console.log("key:"+key+" ----value:"+value);
+        var timestamp3 = value.time;
+        var newDate  = new Date();
+        newDate.setTime(timestamp3 *1000);
+        var t = newDate.toLocaleTimeString();
+
         var from_user_id = value.user_id;
+        var touserid = value.touserid;
+
+        if(touserid =='all'){
+            $("#msg_all").append('<div class="my_say_con"><font color=\"#0000FF\">'+value.user_name+t+"</font><p><font color=\"#333333\">"+value.msg+'</font></p></div>');
+             return ;
+        }
+
+
         if(from_user_id == user_id){
                from_user_id = value.touserid;
            }
-        //var ing_user = $(".client_"+from_user_id).attr('data-index');
-
         var ing_user =  'title_user'+from_user_id;
         if(i==0)
         {
             $("#user_con"+ing_user+">div").remove(".my_say_con");
             i++;
         }
-        var timestamp3 = value.time;
-        var newDate  = new Date();
-        newDate.setTime(timestamp3 *1000);
-        var t = newDate.toLocaleTimeString();
+
         $("#user_con"+ing_user).append('<div class="my_say_con"><font color=\"#0000FF\">'+value.user_name+t+"</font><p><font color=\"#333333\">"+value.msg+'</font></p></div>');
       });
 
