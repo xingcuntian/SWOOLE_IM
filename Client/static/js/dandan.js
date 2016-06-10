@@ -274,6 +274,8 @@ function title_newuser(id,user,fto_user_id){
 	  $("#right_mid").html("");//清空右边的内容
 }
 
+ window['dandan']['title_newuser'] = title_newuser;
+
 //去掉兄弟的样式
 function my_siblings($this){
      $($this).siblings().children().children().children().children().removeClass("td_hide_click td_user_click");
