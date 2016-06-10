@@ -226,23 +226,23 @@ function ing_my_user($this,arr,i,ing){
 //创建标题栏和主控制（原是有一个主控制，忘了，就合在一起了，哈哈）
 function title_newuser(id,user,fto_user_id){
     //群聊
-    var groupChatLen = $("#msg_all>div").length;
-    if(groupChatLen >=1){
-        groupid = 'title_userall';
-        var groupuser = '我的好友们';
-        if($("#"+groupid).length <1 ){
-            $("#mid_top").append('<div id="'+groupid+'" class="list"><table border="0" cellspacing="0" cellpadding="0"><tr><td id="zi'+groupid+'" class="td_user td_user_click">'+groupuser+'</td><td id="zino'+groupid+'" class="td_hide td_hide_click">X</td></tr></table></div>');
-            $('#'+groupid).click(function(){title_newuser(groupid,groupuser,'all'); });//给按钮加事件
-            //关闭
-            $("#zino"+groupid).click(function(){delete_user(groupid,groupuser,'all'); return false });//关闭打开的
-            my_user_con(groupuser,groupid);
-        }else{
-            $("#zino"+groupid).addClass("td_hide_click");//给自己加样式
-            $("#zi"+groupid).addClass("td_user_click");//给自己加样式
-        }
-
-        my_siblings("#"+groupid);//去掉兄弟样式
-    }
+    //var groupChatLen = $("#msg_all>div").length;
+    //if(groupChatLen >=1){
+    //    groupid = 'title_userall';
+    //    var groupuser = '我的好友们';
+    //    if($("#"+groupid).length <1 ){
+    //        $("#mid_top").append('<div id="'+groupid+'" class="list"><table border="0" cellspacing="0" cellpadding="0"><tr><td id="zi'+groupid+'" class="td_user td_user_click">'+groupuser+'</td><td id="zino'+groupid+'" class="td_hide td_hide_click">X</td></tr></table></div>');
+    //        $('#'+groupid).click(function(){title_newuser(groupid,groupuser,'all'); });//给按钮加事件
+    //        //关闭
+    //        $("#zino"+groupid).click(function(){delete_user(groupid,groupuser,'all'); return false });//关闭打开的
+    //        my_user_con(groupuser,groupid);
+    //    }else{
+    //        $("#zino"+groupid).addClass("td_hide_click");//给自己加样式
+    //        $("#zi"+groupid).addClass("td_user_click");//给自己加样式
+    //    }
+    //
+    //    my_siblings("#"+groupid);//去掉兄弟样式
+    //}
     //群聊 end
 
 	  if($("#"+id).length<1){
@@ -357,7 +357,7 @@ function delete_user(id,user,img){
      });
 
      //群聊
-	 if($(".list").length<1 || $("#user_contitle_userall").is(":hidden") == false || to_user_id =='all'){
+	 if(typeof(to_user_id) == "undefined"  || to_user_id =='all'){
          msg.cmd = 'qmessage';
          msg.to = 'all';
          msg.fromuserid = user_id;
