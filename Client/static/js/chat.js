@@ -206,6 +206,7 @@ function findUserMsg(dataObj,ws)
     setTimeout(function() {//此处是过一定时间后自动消失
         $.blinkTitle.clear(timerArr);
     }, 10000);
+    document.title = webtitle;
    ////
 
 }
@@ -241,6 +242,8 @@ function showQlUserMsg(dataObj)
     setTimeout(function() {//此处是过一定时间后自动消失
         $.blinkTitle.clear(timerArr);
     }, 10000);
+
+    document.title = webtitle;
   ////
 }
 
@@ -296,6 +299,10 @@ function getnoreadmessage(message)
         if($("#user_con"+ing_user).length <= 0){
             $("#"+id).click();
         }
+
+        $("#zi"+ing_user).addClass("td_user_msg");
+        $("#zinot"+ing_user).addClass("td_user_msg");
+
         var timestamp3 = value.time;
         var newDate  = new Date();
         newDate.setTime(timestamp3 *1000);
