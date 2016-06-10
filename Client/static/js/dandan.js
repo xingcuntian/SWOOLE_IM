@@ -254,8 +254,13 @@ function title_newuser(id,user,fto_user_id){
     if(groupChatLen >=1){
         var groupid = 'title_userall';
         var groupuser = '我的好友们';
-        $("#mid_top").append('<div id="'+id+'" class="list"><table border="0" cellspacing="0" cellpadding="0"><tr><td id="zi'+id+'" class="td_user td_user_click">'+groupuser+'</td><td id="zino'+id+'" class="td_hide td_hide_click">X</td></tr></table></div>');
-        my_user_con(groupuser,groupid);
+        if($("#title_userall").length ==0 ){
+          $("#mid_top").append('<div id="'+groupid+'" class="list"><table border="0" cellspacing="0" cellpadding="0"><tr><td id="zi'+groupid+'" class="td_user td_user_click">'+groupuser+'</td><td id="zino'+groupid+'" class="td_hide td_hide_click">X</td></tr></table></div>');
+             $('#'+groupid).click(function(){title_newuser(groupid,user,'all'); });//给按钮加事件
+            //关闭
+             $("#zino"+groupid).click(function(){delete_user(groupid,user,'all'); return false });//关闭打开的
+              my_user_con(groupuser,groupid);
+        }
     }
 
     //群聊 end
@@ -365,14 +370,17 @@ function delete_user(id,user,img){
          // websocket end
 
 	   var ing_id=ing_user.substring(10,ing_user.length);
-
+          $("#texterea").focus();//光标焦点
+         if(ing_id == 'all'){
+             return true;
+         }
 	   if($("#usering"+ing_id).length<1){//创建最近聊天人
 	       dandan.newuser('.ul_1',$arr_user[ing_id],ing_id,ing_id);//创建最近聊天
 	   }else{
 		   ing_my_user('.ul_1',$arr_user[ing_id],ing_id,ing_id);//更新最近聊天的位置
 	   }
 
-	  $("#texterea").focus();//光标焦点
+
 	}  
 
 

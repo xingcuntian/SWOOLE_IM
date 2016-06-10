@@ -209,6 +209,10 @@ function showQlUserMsg(dataObj)
     var newDate  = new Date();
     newDate.setTime(timestamp3 *1000);
     var t = newDate.toLocaleTimeString();
+    if($("#user_contitle_userall").length > 0)
+    {
+        $("#user_contitle_userall").append('<div class="my_say_con"><font color=\"#0000FF\">'+dataObj.from_username+t+"</font><p><font color=\"#333333\">"+dataObj.data+'</font></p></div>');
+    }
     $("#msg_all").append('<div class="my_say_con"><font color=\"#0000FF\">'+dataObj.from_username+t+"</font><p><font color=\"#333333\">"+dataObj.data+'</font></p></div>');
 
 }
