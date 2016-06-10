@@ -230,13 +230,18 @@ function title_newuser(id,user,fto_user_id){
     if(groupChatLen >=1){
         groupid = 'title_userall';
         var groupuser = '我的好友们';
-        if($("#title_userall").length ==0 ){
+        if($("#"+groupid).length <1 ){
             $("#mid_top").append('<div id="'+groupid+'" class="list"><table border="0" cellspacing="0" cellpadding="0"><tr><td id="zi'+groupid+'" class="td_user td_user_click">'+groupuser+'</td><td id="zino'+groupid+'" class="td_hide td_hide_click">X</td></tr></table></div>');
             $('#'+groupid).click(function(){title_newuser(groupid,groupuser,'all'); });//给按钮加事件
             //关闭
             $("#zino"+groupid).click(function(){delete_user(groupid,groupuser,'all'); return false });//关闭打开的
             my_user_con(groupuser,groupid);
+        }else{
+            $("#zino"+groupid).addClass("td_hide_click");//给自己加样式
+            $("#zi"+groupid).addClass("td_user_click");//给自己加样式
         }
+
+        my_siblings("#"+groupid);//去掉兄弟样式
     }
     //群聊 end
 
