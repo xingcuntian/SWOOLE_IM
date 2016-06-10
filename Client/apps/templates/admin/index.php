@@ -14,6 +14,7 @@
 <script type="text/javascript" src="/static/js/config.js"></script>
 <script type="text/javascript" src="/static/js/chat.js"></script>
 <script type="text/javascript" src="/static/js/dandan.js"></script>
+<script type="text/javascript" src="/static/js/jqtitle.js"></script>
 <script type="text/javascript">
 $admin_name = user_name;
     //成员数组

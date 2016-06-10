@@ -24,6 +24,14 @@ $(document).ready(function () {
     {
         ws = new Comet(webim.server);
     }
+
+ //标题闪烁
+     var timerArr = $.blinkTitle.show();
+    setTimeout(function() {//此处是过一定时间后自动消失
+        $.blinkTitle.clear(timerArr);
+    }, 10000);
+////
+
     listenEvent();
 });
 
