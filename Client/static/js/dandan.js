@@ -8,6 +8,7 @@ email:admin@seejoke.com
    var ing_user;//当前用户
    var ing_clientid ; //发送的连接ID
    var to_user_id;
+   var groupid;
    //浏览器
    function liulanqi(){
 	  var h=$(window).height();
@@ -224,6 +225,21 @@ function ing_my_user($this,arr,i,ing){
 
 //创建标题栏和主控制（原是有一个主控制，忘了，就合在一起了，哈哈）
 function title_newuser(id,user,fto_user_id){
+    //群聊
+    var groupChatLen = $("#msg_all>div").length;
+    if(groupChatLen >=1){
+        groupid = 'title_userall';
+        var groupuser = '我的好友们';
+        if($("#title_userall").length ==0 ){
+            $("#mid_top").append('<div id="'+groupid+'" class="list"><table border="0" cellspacing="0" cellpadding="0"><tr><td id="zi'+groupid+'" class="td_user td_user_click">'+groupuser+'</td><td id="zino'+groupid+'" class="td_hide td_hide_click">X</td></tr></table></div>');
+            $('#'+groupid).click(function(){title_newuser(groupid,groupuser,'all'); });//给按钮加事件
+            //关闭
+            $("#zino"+groupid).click(function(){delete_user(groupid,groupuser,'all'); return false });//关闭打开的
+            my_user_con(groupuser,groupid);
+        }
+    }
+    //群聊 end
+
 	  if($("#"+id).length<1){
 	  $("#mid_top").append('<div id="'+id+'" class="list"><table border="0" cellspacing="0" cellpadding="0"><tr><td id="zi'+id+'" class="td_user td_user_click">'+user+'</td><td id="zino'+id+'" class="td_hide td_hide_click">X</td></tr></table></div>');
 
@@ -248,23 +264,8 @@ function title_newuser(id,user,fto_user_id){
 	  
 	  ing_user=id;//当前用户
       to_user_id = fto_user_id;
+      groupid = '';
 
-    //群聊
-    var groupChatLen = $("#msg_all>div").length;
-    if(groupChatLen >=1){
-        var groupid = 'title_userall';
-        var groupuser = '我的好友们';
-        if($("#title_userall").length ==0 ){
-          $("#mid_top").append('<div id="'+groupid+'" class="list"><table border="0" cellspacing="0" cellpadding="0"><tr><td id="zi'+groupid+'" class="td_user td_user_click">'+groupuser+'</td><td id="zino'+groupid+'" class="td_hide td_hide_click">X</td></tr></table></div>');
-             $('#'+groupid).click(function(){title_newuser(groupid,groupuser,'all'); });//给按钮加事件
-            //关闭
-             $("#zino"+groupid).click(function(){delete_user(groupid,groupuser,'all'); return false });//关闭打开的
-              my_user_con(groupuser,groupid);
-        }
-    }
-
-    //群聊 end
-	  
 	  $("#right_mid").html("");//清空右边的内容
 }
 
@@ -341,8 +342,17 @@ function delete_user(id,user,img){
           return false;
      }
 
-    //群聊
-	 if($(".list").length<1){
+     var divArr = $(".con_box div[id^='user_contitle_user']");
+     $.each(divArr,function(i,n){
+         var is_hidle = $(n).css('display');
+         if(is_hidle =='block'){
+             var getid = $(n).attr('id');
+             to_user_id =  getid.replace("user_contitle_user","");
+         }
+     });
+
+     //群聊
+	 if($(".list").length<1 || $("#user_contitle_userall").is(":hidden") == false || to_user_id =='all'){
          msg.cmd = 'qmessage';
          msg.to = 'all';
          msg.fromuserid = user_id;
