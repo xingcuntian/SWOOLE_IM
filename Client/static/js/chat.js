@@ -227,6 +227,9 @@ function showQlUserMsg(dataObj)
         dandan.title_newuser('title_userall','群聊','all');
     }
 
+    $("#zititle_userall").addClass("td_user_msg");
+    $("#zinotitle_userall").addClass("td_user_msg");
+
     $("#user_contitle_userall").html( $("#msg_all").html() );
 
     if($("#user_contitle_userall").length > 0)
