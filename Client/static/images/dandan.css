@@ -34,3 +34,6 @@ li{list-style:none}
 .td_user_click{background:url(user_title_click.gif) left no-repeat;}
 .td_hide_click{background:url(user_title_click.gif) right no-repeat;}
 .blank{clear:both}
+
+
+.td_user_msg{background:url(msg.png) left no-repeat; color:#FF0}

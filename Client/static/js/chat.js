@@ -196,6 +196,8 @@ function findUserMsg(dataObj,ws)
    var t= new Date().toLocaleTimeString();//当前时间
    $("#user_con"+ing_user).append('<div class="my_say_con"><font color=\"#0000FF\">'+dataObj.from_username+t+"</font><p><font color=\"#333333\">"+dataObj.data+'</font></p></div>');
    $("#right_mid").html(dataObj.data);//右边显示刚发送的文字
+   $("#zititle_user"+dataObj.fromuserid).addClass("td_user_msg");
+   $("#zinotitle_user"+dataObj.fromuserid).addClass("td_user_msg");
 }
 
 
