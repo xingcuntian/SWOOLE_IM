@@ -259,6 +259,10 @@ function title_newuser(id,user,fto_user_id){
 	  $("#zino"+id).addClass("td_hide_click");//给自己加样式
 	  $("#zi"+id).addClass("td_user_click");//给自己加样式
 	  }
+
+    $("#zi"+id).removeClass("td_user_msg");
+    $("#zino"+id).removeClass("td_user_msg");
+
 	  my_siblings("#"+id);//去掉兄弟样式
 	  
 	  //创建内容框
@@ -357,6 +361,9 @@ function delete_user(id,user,img){
              to_user_id =  getid.replace("user_contitle_user","");
          }
      });
+
+     $("#zi"+ing_user).removeClass("td_user_msg");
+     $("#zino"+ing_user).removeClass("td_user_msg");
 
      //群聊
 	 if(typeof(to_user_id) == "undefined"  || to_user_id =='all'){
