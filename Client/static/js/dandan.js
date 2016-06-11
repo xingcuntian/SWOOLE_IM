@@ -380,6 +380,7 @@ function delete_user(id,user,img){
              $("#user_contitle_userall").append('<div class="my_say_con"><font color=\"#0000FF\">'+user_name+t+"</font><p><font color=\"#333333\">"+content+'</font></p></div>');
          }
          $("#texterea").val("");
+         $(".my_show").scrollTop($(".con_box").height()-$(".my_show").height());//让滚动滚到最底端
          return false;
 		 }
 
