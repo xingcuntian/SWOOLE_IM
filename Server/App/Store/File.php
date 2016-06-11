@@ -95,6 +95,12 @@ class File
                 }
                 $key  = $log['user_id'].'_'.$log['touserid'];
                 $key1 = $log['touserid'].'_'.$log['user_id'];
+
+                if($log['touserid'] == 'all'){
+                    $key  = 'all';
+                    $key1 = 'all';
+                }
+
                 if(!isset($this->history[$key])){
                      $key = $key1;
                 }
