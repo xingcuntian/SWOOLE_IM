@@ -110,7 +110,7 @@ HTML;
             'title' =>  'hello '.$resMsg['user_name'].'上线了',
             'data' =>  " hi 我上线了 让咱们 hi 起来吧！"
         );
-        file_put_contents('/zhang/IMlog/sw.log',var_export($loginMsg,true),FILE_APPEND);
+       // file_put_contents('/zhang/IMlog/sw.log',var_export($loginMsg,true),FILE_APPEND);
         $this->broadcastJson($client_id, $loginMsg);
   }
 
@@ -130,7 +130,7 @@ HTML;
         }
         $resMsg['list'] = $list;
         $resMsg['userList'] = $userList;
-        file_put_contents('/zhang/IMlog/sw.log',var_export($resMsg,true),FILE_APPEND);
+        //file_put_contents('/zhang/IMlog/sw.log',var_export($resMsg,true),FILE_APPEND);
         $this->sendJson($client_id, $resMsg);
     }
 
@@ -166,7 +166,7 @@ HTML;
 
         $resMsg['data'] = $data;
 
-        file_put_contents('/zhang/IMlog/swhis.log',var_export($history,true),FILE_APPEND);
+        //file_put_contents('/zhang/IMlog/swhis.log',var_export($history,true),FILE_APPEND);
 
         $this->sendJson($client_id, $resMsg);
 
@@ -253,7 +253,7 @@ HTML;
         $resMsg['from_userid']   =  $fromUserInfo['user_id'];
         $resMsg['add_message'] = '1';
         $this->sendJson($toUserInfo['fd'], $resMsg);
-        file_put_contents('/zhang/IMlog/sw.log',var_export($resMsg,true),FILE_APPEND);
+       // file_put_contents('/zhang/IMlog/sw.log',var_export($resMsg,true),FILE_APPEND);
         $this->store->addHistory($resMsg['from_userid'], $msg['data'],$touser_id);
     }
 
@@ -280,7 +280,7 @@ HTML;
 
         $this->broadcastJson($client_id, $resMsg);
 
-        file_put_contents('/zhang/IMlog/sw.log',var_export($resMsg,true),FILE_APPEND);
+        //file_put_contents('/zhang/IMlog/sw.log',var_export($resMsg,true),FILE_APPEND);
         $this->store->addHistory($resMsg['from_userid'], $msg['data'],$touser_id);
 
     }
@@ -337,7 +337,7 @@ HTML;
     {
         $tmp = array('return'=>array('client_id'=>$client_id,'msg'=>$array));
 
-        file_put_contents('/zhang/IMlog/send.log',var_export($tmp,true),FILE_APPEND);
+        //file_put_contents('/zhang/IMlog/send.log',var_export($tmp,true),FILE_APPEND);
 
 
         $msg = json_encode($array);
