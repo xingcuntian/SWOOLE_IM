@@ -151,6 +151,12 @@ HTML;
         $data  = array();
         $key  = $userid.'_'.$to_userid;
         $key1 = $to_userid.'_'.$userid;
+
+        if($to_userid == 'all'){
+            $key  = 'all';
+            $key1 = 'all';
+        }
+
         if(isset($history[$key])){
             $data = $history[$key];
         }

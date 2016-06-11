@@ -165,6 +165,12 @@ class File
 
         $key  = $userid.'_'.$touserid;
         $key1 = $touserid.'_'.$userid;
+
+        if($touserid == 'all'){
+            $key  = 'all';
+            $key1 = 'all';
+        }
+
         if(!isset($this->history[$key])){
             $key = $key1;
         }

@@ -207,6 +207,7 @@ function findUserMsg(dataObj,ws)
    $("#right_mid").html(dataObj.data);//右边显示刚发送的文字
    $("#zititle_user"+dataObj.fromuserid).addClass("td_user_msg");
    $("#zinotitle_user"+dataObj.fromuserid).addClass("td_user_msg");
+   $(".my_show").scrollTop($(".con_box").height()-$(".my_show").height());//让滚动滚到最底端
 
     document.title = dataObj.data;
     //标题闪烁
@@ -234,18 +235,14 @@ function showQlUserMsg(dataObj)
      if(divArr.length == 0 || (divArr.length >0 && $("#user_contitle_userall").length == 0) ){
         dandan.title_newuser('title_userall','群聊','all');
     }
-
     $("#zititle_userall").addClass("td_user_msg");
     $("#zinotitle_userall").addClass("td_user_msg");
-
     $("#user_contitle_userall").html( $("#msg_all").html() );
-
     if($("#user_contitle_userall").length > 0)
     {
         $("#user_contitle_userall").append('<div class="my_say_con"><font color=\"#0000FF\">'+dataObj.from_username+t+"</font><p><font color=\"#333333\">"+dataObj.data+'</font></p></div>');
     }
     $("#msg_all").append('<div class="my_say_con"><font color=\"#0000FF\">'+dataObj.from_username+t+"</font><p><font color=\"#333333\">"+dataObj.data+'</font></p></div>');
-
 
     document.title = dataObj.data;
     //标题闪烁
@@ -253,10 +250,11 @@ function showQlUserMsg(dataObj)
     setTimeout(function() {//此处是过一定时间后自动消失
         $.blinkTitle.clear(timerArr);
     }, 10000);
-
     document.title = webtitle;
   ////
+    $(".my_show").scrollTop($(".con_box").height()-$(".my_show").height());//让滚动滚到最底端
 }
+
 
 
 
@@ -273,16 +271,12 @@ function showMsgHistory(message)
         var newDate  = new Date();
         newDate.setTime(timestamp3 *1000);
         var t = newDate.toLocaleTimeString();
-
         var from_user_id = value.user_id;
         var touserid = value.touserid;
-
         if(touserid =='all'){
             $("#msg_all").append('<div class="my_say_con"><font color=\"#0000FF\">'+value.user_name+t+"</font><p><font color=\"#333333\">"+value.msg+'</font></p></div>');
              return ;
         }
-
-
         if(from_user_id == user_id){
                from_user_id = value.touserid;
            }
@@ -292,11 +286,11 @@ function showMsgHistory(message)
             $("#user_con"+ing_user+">div").remove(".my_say_con");
             i++;
         }
-
         $("#user_con"+ing_user).append('<div class="my_say_con"><font color=\"#0000FF\">'+value.user_name+t+"</font><p><font color=\"#333333\">"+value.msg+'</font></p></div>');
       });
-
+    $(".my_show").scrollTop($(".con_box").height()-$(".my_show").height());//让滚动滚到最底端
 }
+
 /*
 * 未读消息
 * */
@@ -318,17 +312,15 @@ function getnoreadmessage(message)
         if($("#user_con"+ing_user).length <= 0){
             $("#"+id).click();
         }
-
         $("#zi"+ing_user).addClass("td_user_msg");
         $("#zinot"+ing_user).addClass("td_user_msg");
-
         var timestamp3 = value.time;
         var newDate  = new Date();
         newDate.setTime(timestamp3 *1000);
         var t = newDate.toLocaleTimeString();
         $("#user_con"+ing_user).append('<div class="my_say_con"><font color=\"#0000FF\">'+value.user_name+t+"</font><p><font color=\"#333333\">"+value.data+'</font></p></div>');
      });
-
+    $(".my_show").scrollTop($(".con_box").height()-$(".my_show").height());//让滚动滚到最底端
 }
 
 
