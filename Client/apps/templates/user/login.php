@@ -36,7 +36,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                     </ul>
                 </div>
                 <div class="forgot">
-                    <a href="#">Forgot password?</a>
+                    <a href="#">注册</a>  <a href="#">Forgot password?</a>
                 </div>
                 <div class="clearfix"> </div>
             </div>
