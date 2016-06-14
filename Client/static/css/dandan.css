@@ -17,7 +17,7 @@ li{list-style:none}
 #mid_say{float:left; display:inline; height:88px; background:#FFFFFF}
 #mid_say textarea{width:300px; height:80px; padding:0; margin:0;/*border:solid 1px #ccc;*/ border:0; overflow:auto;}
 #mid_say .textarea2{border:2px solid #66FFFF}
-#mid_sand{float:right; display:inline; /*border:1px solid #990000;*/ margin-top:40px; margin-right:10px; height:35px; width:93px; text-align:center; font-size:36px; background:url(ok.gif); cursor:pointer; overflow:hidden; text-indent:-9999px}
+#mid_sand{float:right; display:inline; /*border:1px solid #990000;*/ margin-top:40px; margin-right:10px; height:35px; width:93px; text-align:center; font-size:36px; background:url(/static/images/ok.gif); cursor:pointer; overflow:hidden; text-indent:-9999px}
 #mid_foot{height:118px; *height:88px}
 .mid_box{background:url(/static/images/body_foot.gif) left repeat-x; height:30px; width:100%; float:left}
 .my_show{padding:20px 5px; padding-top:0; overflow:auto}
