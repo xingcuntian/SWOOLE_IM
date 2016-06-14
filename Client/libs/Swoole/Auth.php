@@ -34,7 +34,7 @@ class Auth
     static $password_cost = 10;
     static $password_salt_size = 22;
 
-    static $cookie_life = 2592000;
+    static $cookie_life = 0;
     static $session_destroy = false;
 
     protected $config;
@@ -112,6 +112,41 @@ class Auth
         return $this->user;
     }
 
+
+    /**
+     * 注册
+     * @param $username
+     * @param $password
+     * @return bool
+     */
+    function register($username, $password)
+    {
+        $this->user = $this->db->query('select ' . $this->select . ' from ' . $this->login_table . " where " . self::$username . "='$username' limit 1")->fetch();
+        if (empty($this->user))
+        {
+            $pwd_hash = self::makePasswordHash($username, $password);
+
+            $this->user = $this->db->query('INSERT INTO  '.$this->login_table.' (username,password,realname) ' . " VALUES ('{$username}','{$pwd_hash}','{$password}')");
+
+            if( self::$cookie_life > 0)
+            {
+                 Cookie::set(self::$session_prefix . 'username', $username, time() + self::$cookie_life, '/');
+            }else{
+                Cookie::set(self::$session_prefix . 'username', $username, self::$cookie_life, '/');
+            }
+            return true;
+        }
+        else
+        {
+                $this->errCode = self::ERR_PASSWORD;
+                return false;
+        }
+    }
+
+
+
+
+
     /**
      * 登录
      * @param $username
@@ -121,7 +156,11 @@ class Auth
      */
     function login($username, $password, $auto_login = false)
     {
-        Cookie::set(self::$session_prefix . 'username', $username, time() + self::$cookie_life, '/');
+        if(self::$cookie_life > 0){
+            Cookie::set(self::$session_prefix . 'username', $username, time() + self::$cookie_life, '/');
+        }else{
+            Cookie::set(self::$session_prefix . 'username', $username, self::$cookie_life, '/');
+        }
         $this->user = $this->db->query('select ' . $this->select . ' from ' . $this->login_table . " where " . self::$username . "='$username' limit 1")->fetch();
         if (empty($this->user))
         {
@@ -139,6 +178,7 @@ class Auth
                 $_SESSION[self::$session_prefix . 'user_name'] = $username;
                 if ($auto_login)
                 {
+                    self::$cookie_life = 2592000;
                     $this->autoLogin();
                 }
                 return true;

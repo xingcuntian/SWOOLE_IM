@@ -11,7 +11,9 @@ class Session
 {
     // 类成员属性定义
     static $cache_prefix = "phpsess_";
-    static $cookie_lifetime = 86400000;
+    //static $cookie_lifetime = 86400000;
+
+    static $cookie_lifetime = 0;
     static $cache_lifetime = 0;
 
     /**

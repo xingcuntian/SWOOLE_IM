@@ -149,7 +149,7 @@ function regist(validate){
 	if(validate.form()){
 		if($("#checkBox").attr("checked")){ 
 			$.ajax({
-				url: "/user/regist",
+				url: "/user/register",
 				type: "post",
 				data: {
 					user_name: $("#user_name").val(),

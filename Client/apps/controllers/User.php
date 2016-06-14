@@ -18,7 +18,8 @@ class User extends Swoole\Controller
         }
         if (!empty($_POST['password']))
         {
-            $r = $this->user->login(trim($_POST['username']), $_POST['password']);
+            $autologin = isset($_POST['autologin'])?$_POST['autologin']:false;
+            $r = $this->user->login(trim($_POST['username']), $_POST['password'],$autologin);
             if ($r)
             {
                 $this->http->redirect('/admin/index/');
@@ -47,4 +48,33 @@ class User extends Swoole\Controller
         $this->session->start();
         $this->user->logout();
     }
+
+
+
+    function register()
+    {
+        //使用crypt密码
+        Swoole\Auth::$password_hash = Swoole\Auth::HASH_CRYPT;
+        if (!empty($_POST['user_name']) && !empty($_POST['password']))
+        {
+            $this->session->start();
+
+            $r = $this->user->register(trim($_POST['user_name']), $_POST['password']);
+            if ($r)
+            {
+                $this->http->redirect('/admin/index/');
+                return;
+            }
+            else
+            {
+                echo "注册失败";
+                $this->display('user/register.html');
+            }
+        }
+        else
+        {
+            $this->display('user/register.html');
+        }
+    }
+
 }
