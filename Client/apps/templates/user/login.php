@@ -46,18 +46,10 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
             </div>
             <input type="submit" name="Sign In" value="Login">
             <div class="signup-text">
-                <a href="signup.html">Don't have an account? Create one now</a>
+                <a href="/user/register">Don't have an account? Create one now</a>
             </div>
             <hr>
-            <h2>or login with</h2>
-            <div class="login-icons">
-                <ul>
-                    <li><a href="#" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                    <li><a href="#" class="google"><i class="fa fa-google-plus"></i></a></li>
-                    <li><a href="#" class="dribbble"><i class="fa fa-dribbble"></i></a></li>
-                </ul>
-            </div>
+
         </form>
     </div>
 </div>
