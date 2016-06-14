@@ -346,7 +346,7 @@ function delete_user(id,user,img){
      var content = $("#texterea").val();
           content = content.replace(" ", "&nbsp;");
      var msg = {};
-     var t = new Date().toLocaleTimeString();//当前时间
+     var t = " "+new Date().toLocaleTimeString();//当前时间
 
      if(content.length ==0 ){
           alert("你输入的内容为空")
