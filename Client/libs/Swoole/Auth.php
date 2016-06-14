@@ -125,8 +125,8 @@ class Auth
         if (empty($this->user))
         {
             $pwd_hash = self::makePasswordHash($username, $password);
-
-            $this->user = $this->db->query('INSERT INTO  '.$this->login_table.' (username,password,realname) ' . " VALUES ('{$username}','{$pwd_hash}','{$password}')");
+            $lasttime = date('Y-m-d H:i:s');
+            $this->user = $this->db->query('INSERT INTO  '.$this->login_table.' (username,password,realname,lasttime) ' . " VALUES ('{$username}','{$pwd_hash}','{$password}','{$lasttime}')");
 
             if( self::$cookie_life > 0)
             {

@@ -68,7 +68,7 @@ class User extends Swoole\Controller
             else
             {
                 echo "注册失败";
-                $this->display('user/register.html');
+                $this->http->redirect('/user/register/');
             }
         }
         else
