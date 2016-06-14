@@ -190,14 +190,14 @@ function regist(validate){
 var Utils = function(){};
 
 Utils.prototype.loadProperties = function(lang){
-	jQuery.i18n.properties({// 加载资浏览器语言对应的资源文件
-		name:'ApplicationResources',
-		language: lang,
-		path:'resources/i18n/',
-		mode:'map',
-		callback: function() {// 加载成功后设置显示内容
-		} 
-	});	
+	//jQuery.i18n.properties({// 加载资浏览器语言对应的资源文件
+	//	name:'ApplicationResources',
+	//	language: lang,
+	//	path:'resources/i18n/',
+	//	mode:'map',
+	//	callback: function() {// 加载成功后设置显示内容
+	//	}
+	//});
 };
 
 Utils.prototype.getScriptArgs = function(){//获取多个参数
