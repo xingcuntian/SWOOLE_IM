@@ -30,13 +30,18 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                 <div class="forgot-grid">
                     <ul>
                         <li>
-                            <input type="checkbox" id="brand1" value="">
+                            <input type="checkbox" name="autologin" id="brand1" value="">
                             <label for="brand1"><span></span>Remember me</label>
                         </li>
+
+                        <li>
+                            <label for="brand1"><span></span><a href=""> 注册用户</a></label>
+                        </li>
+
                     </ul>
                 </div>
                 <div class="forgot">
-                    <a href="#">注册</a>  <a href="#">Forgot password?</a>
+                    <a href="#">注册</a>
                 </div>
                 <div class="clearfix"> </div>
             </div>
