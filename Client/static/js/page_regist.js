@@ -164,6 +164,10 @@ function regist(validate){
 					},
 				success: function(data){
 					$('.loading').hide();
+                    $.each(data, function(i, item) {
+                        alert(i+">>>"+item);
+                    });
+
 					if(data.hasOwnProperty("code")){
 						if(data.code == 0){
 							//注册成功
@@ -171,22 +175,6 @@ function regist(validate){
 						}else if(data.code == 1){
 							//数据库链接失败
 							$(".login-error").html($.i18n.prop("Error.Exception"));
-						}else if(data.code == 2){
-							//参数传递失败
-							$(".login-error").show();
-							$(".login-error").html($.i18n.prop("Error.ParameterError"));
-						}else if(data.code == 3){
-							//公司已经被注册
-							$("#company").addClass("error");
-							$("#company").after(registError);						
-							$("#company").next("label.repeated").text($.i18n.prop("Error.CompaniesAlreadyExists"));
-							registError.show();
-						}else if(data.code == 4){
-							//邮箱已经被注册
-							$("#email").addClass("error");
-							$("#email").after(registError);
-							$("#email").next("label.repeated").text($.i18n.prop("Error.EmailAlreadyExists"));
-							registError.show();
 						}else{
 							//系统错误
 							$(".login-error").html($.i18n.prop("Error.SysError"));

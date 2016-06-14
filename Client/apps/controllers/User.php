@@ -62,14 +62,14 @@ class User extends Swoole\Controller
             $r = $this->user->register(trim($_POST['user_name']), $_POST['password']);
             if ($r)
             {
-                $this->http->redirect('/admin/index/');
-                return;
+                $data = array('code'=>'0','msg'=>'注册成功');
             }
             else
             {
-                echo "注册失败";
-                $this->http->redirect('/user/register/');
+                $data = array('code'=>'1','msg'=>'注册失败');
             }
+            echo json_encode($data);
+            exit;
         }
         else
         {
