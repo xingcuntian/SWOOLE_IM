@@ -1,0 +1,7 @@
+/.idea
+
+# zend studio for eclipse project files
+.buildpath
+.project
+.settings
+
