@@ -53,11 +53,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
         </form>
     </div>
 </div>
-<div class="go-back login-go-back">
-    <a href="index.html">Go To Home</a>
-</div>
-<div class="copyright login-copyright">
-    <p>Copyright &copy; 2016.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></p>
-</div>
+
+
 </body>
 </html>
