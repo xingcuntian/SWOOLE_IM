@@ -2633,7 +2633,7 @@ button#default-map-btn, button#green-map-btn, button#blue-map-btn,button#grey-ma
     display: inline-block;
 }
 .forgot-grid ul li input[type="checkbox"] {
-    display: none;
+    /*display: none;*/
 }
 .forgot-grid ul li input[type="checkbox"]+label {
     position: relative;

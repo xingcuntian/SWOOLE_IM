@@ -31,7 +31,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                     <ul>
                         <li>
                             <input type="checkbox" name="autologin" id="brand1" value="1">
-                            <label for="brand1"><span></span>Remember me</label>
+                            <label for="brand1">Remember me</label>
                         </li>
 
                         <li style="margin-left:120px;">
