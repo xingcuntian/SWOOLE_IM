@@ -128,12 +128,21 @@ class Auth
             $lasttime = date('Y-m-d H:i:s');
             $this->user = $this->db->query('INSERT INTO  '.$this->login_table.' (username,password,realname,lasttime) ' . " VALUES ('{$username}','{$pwd_hash}','{$password}','{$lasttime}')");
 
+            $this->user = $this->db->query('select ' . $this->select . ' from ' . $this->login_table . " where " . self::$username . "='$username' limit 1")->fetch();
+
+
             if( self::$cookie_life > 0)
             {
                  Cookie::set(self::$session_prefix . 'username', $username, time() + self::$cookie_life, '/');
             }else{
                 Cookie::set(self::$session_prefix . 'username', $username, self::$cookie_life, '/');
             }
+
+            $_SESSION[self::$session_prefix . 'isLogin'] = true;
+            $_SESSION[self::$session_prefix . 'user_id'] = $this->user['id'];
+            $_SESSION[self::$session_prefix . 'token']   = md5($this->user['id'].self::$token);
+            $_SESSION[self::$session_prefix . 'user_name'] = $username;
+
             return true;
         }
         else
