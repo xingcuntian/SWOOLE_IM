@@ -34,14 +34,13 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             <label for="brand1"><span></span>Remember me</label>
                         </li>
 
-                        <li>
-                            <label for="brand1"><span></span><a href=""> 注册用户</a></label>
+                        <li style="margin-left:120px;">
+                            <label for="brand1"><span></span><a href="/user/register"> 注册用户</a></label>
                         </li>
 
                     </ul>
                 </div>
                 <div class="forgot">
-                    <a href="#">注册</a>
                 </div>
                 <div class="clearfix"> </div>
             </div>
