@@ -164,17 +164,14 @@ function regist(validate){
 					},
 				success: function(data){
 					$('.loading').hide();
-                    $.each(data, function(i, item) {
-                        alert(i+">>>"+item);
-                    });
-
+                    alert(data.msg);
 					if(data.hasOwnProperty("code")){
 						if(data.code == 0){
 							//注册成功
-							window.location.href = "registOk.jsp?email="+$('#email').val();
+							window.location.href = "/admin/index/";
 						}else if(data.code == 1){
 							//数据库链接失败
-							$(".login-error").html($.i18n.prop("Error.Exception"));
+                            window.location.href = "/user/register/";
 						}else{
 							//系统错误
 							$(".login-error").html($.i18n.prop("Error.SysError"));

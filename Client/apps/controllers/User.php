@@ -68,7 +68,7 @@ class User extends Swoole\Controller
             {
                 $data = array('code'=>'1','msg'=>'注册失败');
             }
-            echo json_encode($data);
+            return  json_encode($data);
             exit;
         }
         else
