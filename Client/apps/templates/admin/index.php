@@ -29,7 +29,7 @@ window.onbeforeunload = function () {
 };
 
 </script>
-<link href="/static/images/dandan.css" rel="stylesheet" media="screen" type="text/css" />
+<link href="/static/css/dandan.css" rel="stylesheet" media="screen" type="text/css" />
 <link href="/static/css/Propup.css" rel="stylesheet" media="screen" type="text/css" />
 <style type="text/css">
 
