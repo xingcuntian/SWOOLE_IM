@@ -22,12 +22,7 @@ $admin_name = user_name;
     $arr_user= new Array(
         Array(user_name,'0','')
     )
-//    Array('今心','user_img/002.jpg'),
-//    Array('老猪','user_img/003.jpg'),
-//    Array('涛涛','user_img/004.jpg'),
-//    Array('张三'),
-//    Array('李四'),
-//    Array('王五'))
+
 
 window.onbeforeunload = function () {
   return '你确定要离开吗?';
@@ -72,7 +67,7 @@ window.onbeforeunload = function () {
       <div id="right_top">
         <!--<p><img src="images/head.jpg" alt="头象" /></p>
         老猪--></div>
-      <div id="right_mid"></div>
+      <div id="right_mid">ctrl+enter键发送消息</div>
       <div id="right_foot">蛋蛋</div>
       <div class="blank"></div>
     </div>
