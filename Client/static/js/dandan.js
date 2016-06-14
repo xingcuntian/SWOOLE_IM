@@ -417,7 +417,7 @@ function delete_user(id,user,img){
 
 
 //欢迎
-$("#top").html('<br />&nbsp;&nbsp;'+dandan.mytime()+','+$admin_name+',欢迎你的到来！！');
+$("#top").html('<br />&nbsp;&nbsp;'+dandan.mytime()+','+$admin_name+',欢迎你的到来！！<span style="float:right;margin-right:50px"><a href="/user/logout/"> 退出 </a></span>');
 
 //加载用户
 $(".ul").html("");//初始清空原来留在那里让w3c通过的
