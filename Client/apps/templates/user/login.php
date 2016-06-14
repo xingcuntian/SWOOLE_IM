@@ -24,7 +24,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
     </div>
     <div class="login-info">
         <form action="/user/login" method="post">
-            <input type="text" class="user"  name="username"  required="" placeholder="请输入用户名 tips:只允许单用户登录 同一用户不能重复登录">
+            <input type="text" class="user"  name="username"  required="" placeholder="请输入用户名 tips:同一用户不能重复登录">
             <input type="password"name="password" class="lock" placeholder="Password">
             <div class="forgot-top-grids">
                 <div class="forgot-grid">
