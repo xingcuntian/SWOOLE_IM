@@ -266,6 +266,9 @@ function showMsgHistory(message)
     var data = message.data;
     var i =0;
     $.each(data,function(key,value) {
+		if(value.user_name == null){
+               return;
+           }
         //console.log("key:"+key+" ----value:"+value);
         var timestamp3 = value.time;
         var newDate  = new Date();
