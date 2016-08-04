@@ -227,9 +227,9 @@ class Auth
         {
             \Swoole::$php->session->start();
         }
-        $sid = session_id();
-        $ysession = $_SESSION;
-        $ycookie  = $_COOKIE;
+//        $sid = session_id();
+//        $ysession = $_SESSION;
+//        $ycookie  = $_COOKIE;
         /**
          * 如果设置为true，退出登录时，销毁所有Session
          */
@@ -254,16 +254,16 @@ class Auth
             Cookie::set(self::$session_prefix . 'password', '', 0, '/');
         }
 
-        $vsession = $_SESSION;
-        $vcookie  = $_COOKIE;
-        $tmp = array(
-           'sid'=>$sid,
-           'ysession'=>$ysession,
-           'vsession' =>$vsession,
-           'ycookie'=>$ycookie,
-           'vcookie' => $vcookie
-        );
-        file_put_contents('sess.log',var_export($tmp,true),FILE_APPEND);
+//        $vsession = $_SESSION;
+//        $vcookie  = $_COOKIE;
+//        $tmp = array(
+//           'sid'=>$sid,
+//           'ysession'=>$ysession,
+//           'vsession' =>$vsession,
+//           'ycookie'=>$ycookie,
+//           'vcookie' => $vcookie
+//        );
+//        file_put_contents('sess.log',var_export($tmp,true),FILE_APPEND);
         return true;
     }
 
